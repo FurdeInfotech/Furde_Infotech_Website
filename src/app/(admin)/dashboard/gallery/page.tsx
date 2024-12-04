@@ -69,10 +69,9 @@ function Page() {
 
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchGalleryItems();
-  }, []);
+ 
 
+  // Fetch gallery items
   const fetchGalleryItems = async () => {
     setLoading(true);
     try {
@@ -91,6 +90,7 @@ function Page() {
     }
   };
 
+  // Delete a gallery item
   const handleDelete = async () => {
     if (!deleteGalleryId) return;
     try {
@@ -114,6 +114,7 @@ function Page() {
     }
   };
 
+  // Add a new gallery item
   const onSubmit = async (data: z.infer<typeof gallerySchema>) => {
     setIsSubmitting(true);
     try {
@@ -147,8 +148,10 @@ function Page() {
       });
     } finally {
       setIsSubmitting(false);
+      fetchGalleryItems()
     }
   };
+
 
   const filteredItems = galleryItems.filter(
     (item) =>
@@ -165,6 +168,12 @@ function Page() {
       image: undefined,
     },
   });
+
+
+   // Fetch gallery items on component mount
+   useEffect(() => {
+    fetchGalleryItems();
+  }, [dialogOpen]);
   return (
     <section className="py-5 sm:px-5 px-0 h-auto w-auto flex flex-col items-start sm:items-center justify-center">
       <div className="relative md:w-1/2 w-[63%] sm:ml-0 ml-5">
