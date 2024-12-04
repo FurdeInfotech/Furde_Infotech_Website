@@ -50,7 +50,6 @@ import { Loader2, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-
 type Gallery = {
   _id: number;
   title: string;
@@ -69,15 +68,17 @@ function Page() {
 
   const { toast } = useToast();
 
- 
-
   // Fetch gallery items
   const fetchGalleryItems = async () => {
     setLoading(true);
+    console.log("Fetching gallery items...");
     try {
-      const response = await axios.get<{ gallery: Gallery[] }>("/api/get-photo");
-      setGalleryItems(response.data.gallery);
+      const response = await axios.get("/api/get-photo", {
+        headers: { "Cache-Control": "no-cache" },
+      });
+
       console.log("Gallery items fetched:", response.data.gallery);
+      setGalleryItems(response.data.gallery);
     } catch (error) {
       console.error("Failed to load gallery items:", error);
       toast({
@@ -148,17 +149,17 @@ function Page() {
       });
     } finally {
       setIsSubmitting(false);
-      fetchGalleryItems()
+      fetchGalleryItems();
     }
   };
 
-
   const filteredItems = galleryItems.filter(
     (item) =>
-      (item.category?.toLowerCase()?.includes(searchTerm.toLowerCase()) || false) ||
-      (item.title?.toLowerCase()?.includes(searchTerm.toLowerCase()) || false)
+      item.category?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
+      false ||
+      item.title?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
+      false
   );
-  
 
   const form = useForm<z.infer<typeof gallerySchema>>({
     resolver: zodResolver(gallerySchema),
@@ -169,11 +170,10 @@ function Page() {
     },
   });
 
-
-   // Fetch gallery items on component mount
-   useEffect(() => {
+  // Fetch gallery items on component mount
+  useEffect(() => {
     fetchGalleryItems();
-  }, [dialogOpen]);
+  }, []);
   return (
     <section className="py-5 sm:px-5 px-0 h-auto w-auto flex flex-col items-start sm:items-center justify-center">
       <div className="relative md:w-1/2 w-[63%] sm:ml-0 ml-5">
@@ -236,7 +236,6 @@ function Page() {
                           console.log("Deleting item ID:", item._id);
                           setDeleteGalleryId(item._id);
                         }}
-                        
                         size={18}
                       />
                     </AlertDialogTrigger>
