@@ -83,7 +83,7 @@ function Page() {
       console.error("Failed to load gallery items:", error);
       toast({
         title: "Error",
-        description: `Failed to load gallery: ${error.message}`,
+        description: `Failed to load gallery: ${error}`,
         variant: "destructive",
       });
     } finally {
@@ -108,7 +108,7 @@ function Page() {
       console.error("Failed to delete photo:", error);
       toast({
         title: "Error",
-        description: `Failed to delete photo: ${error.message}`,
+        description: `Failed to delete photo: ${error}`,
         variant: "destructive",
       });
     }
@@ -142,14 +142,14 @@ function Page() {
       console.error("Failed to add photo:", error);
       toast({
         title: "Error",
-        description: `Failed to add photo: ${error.message}`,
+        description: `Failed to add photo: ${error}`,
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
   const filteredItems = galleryItems.filter(
     (item) =>
       (item.category?.toLowerCase()?.includes(searchTerm.toLowerCase()) || false) ||
