@@ -50,6 +50,7 @@ import { Loader2, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
+
 type Gallery = {
   _id: number;
   title: string;
@@ -68,15 +69,14 @@ function Page() {
 
   const { toast } = useToast();
 
+ 
+
   // Fetch gallery items
   const fetchGalleryItems = async () => {
     setLoading(true);
     console.log("Fetching gallery items...");
     try {
-      const response = await axios.get("/api/get-photo", {
-        headers: { "Cache-Control": "no-cache" },
-      });
-
+      const response = await axios.get<{ gallery: Gallery[] }>("/api/get-photo");
       console.log("Gallery items fetched:", response.data.gallery);
       setGalleryItems(response.data.gallery);
     } catch (error) {
@@ -90,7 +90,7 @@ function Page() {
       setLoading(false);
     }
   };
-
+  
   // Delete a gallery item
   const handleDelete = async () => {
     if (!deleteGalleryId) return;
@@ -149,17 +149,17 @@ function Page() {
       });
     } finally {
       setIsSubmitting(false);
-      fetchGalleryItems();
+      fetchGalleryItems()
     }
   };
 
+
   const filteredItems = galleryItems.filter(
     (item) =>
-      item.category?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
-      false ||
-      item.title?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
-      false
+      (item.category?.toLowerCase()?.includes(searchTerm.toLowerCase()) || false) ||
+      (item.title?.toLowerCase()?.includes(searchTerm.toLowerCase()) || false)
   );
+  
 
   const form = useForm<z.infer<typeof gallerySchema>>({
     resolver: zodResolver(gallerySchema),
@@ -170,8 +170,9 @@ function Page() {
     },
   });
 
-  // Fetch gallery items on component mount
-  useEffect(() => {
+
+   // Fetch gallery items on component mount
+   useEffect(() => {
     fetchGalleryItems();
   }, []);
   return (
@@ -236,6 +237,7 @@ function Page() {
                           console.log("Deleting item ID:", item._id);
                           setDeleteGalleryId(item._id);
                         }}
+                        
                         size={18}
                       />
                     </AlertDialogTrigger>
