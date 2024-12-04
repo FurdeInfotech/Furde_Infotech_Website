@@ -69,7 +69,6 @@ function Page() {
 
   const { toast } = useToast();
 
-  // Fetch gallery items on component mount
   useEffect(() => {
     fetchGalleryItems();
   }, []);
@@ -79,12 +78,12 @@ function Page() {
     try {
       const response = await axios.get<{ gallery: Gallery[] }>("/api/get-photo");
       setGalleryItems(response.data.gallery);
-      console.log("Gllary Data fetched", response.data.gallery)
+      console.log("Gallery items fetched:", response.data.gallery);
     } catch (error) {
       console.error("Failed to load gallery items:", error);
       toast({
         title: "Error",
-        description: `Failed to load gallery: ${error}`,
+        description: `Failed to load gallery: ${error.message}`,
         variant: "destructive",
       });
     } finally {
@@ -98,19 +97,20 @@ function Page() {
       await axios.delete(`/api/delete-photo/${deleteGalleryId}`);
       toast({ title: "Success", description: "Photo deleted successfully." });
 
-     
+      // Optimistically update the UI by removing the deleted item
+      setGalleryItems((prevItems) =>
+        prevItems.filter((item) => item._id !== deleteGalleryId)
+      );
+
       // Clear the delete ID
       setDeleteGalleryId(null);
     } catch (error) {
       console.error("Failed to delete photo:", error);
       toast({
         title: "Error",
-        description: `Failed to delete photo: ${error}`,
+        description: `Failed to delete photo: ${error.message}`,
         variant: "destructive",
       });
-    }finally {
-      setLoading(false)
-      fetchGalleryItems()
     }
   };
 
@@ -124,7 +124,7 @@ function Page() {
         formData.append("image", data.image);
       }
 
-      await axios.post("/api/add-photo", formData, {
+      const response = await axios.post("/api/add-photo", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -133,7 +133,8 @@ function Page() {
         description: "Photo added to the gallery successfully!",
       });
 
-     
+      // Optimistically update the UI by adding the new item
+      setGalleryItems((prevItems) => [...prevItems, response.data]);
 
       // Close the dialog
       setDialogOpen(false);
@@ -141,14 +142,14 @@ function Page() {
       console.error("Failed to add photo:", error);
       toast({
         title: "Error",
-        description: `Failed to add photo: ${error}`,
+        description: `Failed to add photo: ${error.message}`,
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
-      fetchGalleryItems()
     }
   };
+  
   const filteredItems = galleryItems.filter(
     (item) =>
       (item.category?.toLowerCase()?.includes(searchTerm.toLowerCase()) || false) ||
