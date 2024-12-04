@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-// import bgin from "@/assets/staticbginverted.jpg";
+import bgin from "@/assets/staticbginverted.jpg";
 import who1 from "@/assets/who1.png";
 import who2 from "@/assets/who2.png";
 import who3 from "@/assets/who3.png";
@@ -66,14 +66,14 @@ const FeatureCard = ({ img, title, description }: FeatureCardProps) => (
 export default function WhyChooseUS() {
   return (
     <div className="relative min-h-screen bg-black">
-      {/* <Image
+      <Image
         src={bgin}
         alt="Background Image"
         fill
         quality={100}
         className="-z-[10] object-cover"
         priority // Optimizes the background image loading
-      /> */}
+      />
       <div className="md:pl-20 md:pt-10 pt-0 px-5 w-full">
         <h1 className="text-white text-4xl md:mt-0  font-bold leading-tight">
           WHY CHOOSE US?
