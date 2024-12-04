@@ -5,7 +5,7 @@ import bg from "@/assets/staticbg.jpg";
 import Link from "next/link";
 import WordRotate from "./ui/word-rotate";
 import { FaUserFriends } from "react-icons/fa";
-import { GlobeComponent } from "./GlobeComponent";
+// import { GlobeComponent } from "./GlobeComponent";
 
 export default function Hero() {
   useEffect(() => {
