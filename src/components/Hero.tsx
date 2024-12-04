@@ -22,7 +22,7 @@ export default function Hero() {
   };
   return (
     <>
-      <div className="relative min-h-screen bg-black">
+      <div className="relative min-h-screen">
         {/* <GlobeComponent/> */}
         <Image
           src={bg}

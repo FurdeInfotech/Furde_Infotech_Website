@@ -65,7 +65,7 @@ const FeatureCard = ({ img, title, description }: FeatureCardProps) => (
 
 export default function WhyChooseUS() {
   return (
-    <div className="relative min-h-screen bg-black">
+    <div className="relative min-h-screen">
       <Image
         src={bgin}
         alt="Background Image"
