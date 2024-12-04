@@ -6,7 +6,7 @@ export async function GET() {
     await dbConnect();
 
     const gallery = await GalleryModel.find().sort({ createdAt: -1 });
-    console.log("Fetched gallery data:", gallery);
+   
 
     return new Response(
       JSON.stringify({
