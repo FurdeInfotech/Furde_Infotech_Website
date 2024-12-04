@@ -79,6 +79,7 @@ function Page() {
     try {
       const response = await axios.get<{ gallery: Gallery[] }>("/api/get-photo");
       setGalleryItems(response.data.gallery);
+      console.log("Gllary Data fetched", response.data.gallery)
     } catch (error) {
       console.error("Failed to load gallery items:", error);
       toast({
