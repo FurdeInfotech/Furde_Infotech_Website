@@ -149,7 +149,7 @@ export default function CareersCard() {
               <JobCardLoading key={index} />
             ))}
           </>
-        ) : entryjobs.length === 0 ? (
+        ) : experiencedjobs.length === 0 ? (
           <JobsNotFound/>
         ) : (
           experiencedjobs.map((job) => {

@@ -61,9 +61,9 @@ export default function Navbar() {
   const closeSidebar = () => setSidebarOpen(false);
 
   const handleClick = () => {
-    closeSidebar()
-    setServicesOpen(false)
-  }
+    closeSidebar();
+    setServicesOpen(false);
+  };
 
   useEffect(() => {
     // Disable scrolling when the sidebar is open
@@ -104,8 +104,17 @@ export default function Navbar() {
         </div>
         <ul className="hidden md:flex text-gray-200 justify-center items-center gap-14">
           {navbar.map((nav, index) => {
+            // Check if "Careers" should be active for its page and related sub-pages
+            const isCareersActive =
+            nav.title === "Careers" &&
+            (["/careers", "/open-roles", "/experienced-level-roles", "/entry-level-roles"].includes(pathname) ||
+              pathname.startsWith("/apply/"));
+
             const isActive =
-              pathname === nav.link || pathname.startsWith(nav.link + "/");
+              pathname === nav.link ||
+              pathname.startsWith(nav.link + "/") ||
+              isCareersActive;
+
             return (
               <motion.li
                 key={index}
