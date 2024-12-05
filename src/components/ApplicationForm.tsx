@@ -165,8 +165,8 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
   };
   const handleDialogStateChange = (open: boolean) => {
     if (!open) {
-      form.reset()
-      router.back()
+      // form.reset()
+      // router.back()
     }
     setIsDialogOpen(open); // Update dialog state
   };

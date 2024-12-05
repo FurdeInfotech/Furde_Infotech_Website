@@ -246,12 +246,15 @@ export async function POST(req: Request) {
       attachments: [resumeAttachment, pdfAttachment],
     });
 
+    
     // Log response or error from Resend API
     if (error) {
       console.error("Resend API Error:", error);
       return NextResponse.json({ error }, { status: 500 });
     }
+    console.log(data)
     return NextResponse.json(data);
+    
   } catch (error) {
     console.error("Unexpected error in POST function:", error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
