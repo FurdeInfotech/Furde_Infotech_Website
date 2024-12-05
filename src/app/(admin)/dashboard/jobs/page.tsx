@@ -112,14 +112,10 @@ function Page() {
 
   const onSubmit = async (data: z.infer<typeof jobSchema>) => {
     setIsSubmitting(true);
-    const updatedData = {
-      ...data,
-      designation: data.designation.toLowerCase(), // Ensure designation is lowercase
-    };
     try {
       if (editJob) {
         try {
-          await axios.put(`/api/update-job/${editJob._id}`, updatedData);
+          await axios.put(`/api/update-job/${editJob._id}`, data);
           toast({ title: "Success", description: "Job updated successfully." });
         } catch (error) {
           console.log(error);
@@ -131,7 +127,7 @@ function Page() {
         }
       } else {
         try {
-          await axios.post("/api/add-job", updatedData);
+          await axios.post("/api/add-job", data);
           toast({ title: "Success", description: "Job added successfully." });
         } catch (error) {
           console.log(error);
