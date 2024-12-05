@@ -7,20 +7,26 @@ export async function GET(request: Request) {
     await dbConnect();
 
     // Extract query parameters
-    const { level, limit, designation } = Object.fromEntries(new URL(request.url).searchParams);
+    const { level, limit, designation } = Object.fromEntries(
+      new URL(request.url).searchParams
+    );
 
     // Reverse the hyphenated designation to spaces
-    const formattedDesignation = designation ? designation.replace(/-/g, " ") : "";
+    const formattedDesignation = designation
+      ? designation.replace(/-/g, " ")
+      : "";
 
     // Define the filter for level and designation
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const filter: Record<string, any> = {};
     if (level) filter.level = level; // Filter by level if provided
-    
+
     if (formattedDesignation) {
       // Use case-insensitive regex for designation
-      filter.designation = { $regex: new RegExp(`^${formattedDesignation}$`, 'i') };
+      filter.designation = {
+        $regex: new RegExp(`^${formattedDesignation}$`, "i"),
+      };
     }
-
 
     // Convert limit to a number and apply it (default is all jobs if no limit is specified)
     const jobsLimit = limit ? parseInt(limit, 10) : undefined;
@@ -30,8 +36,6 @@ export async function GET(request: Request) {
     const jobs = await JobModel.find(filter)
       .sort({ createdAt: -1 }) // Sort by most recent
       .limit(safeJobsLimit); // Apply the limit (safeJobsLimit will be Infinity if no limit)
-
-
 
     if (formattedDesignation && jobs.length === 0) {
       return new Response(
@@ -61,4 +65,3 @@ export async function GET(request: Request) {
     );
   }
 }
-

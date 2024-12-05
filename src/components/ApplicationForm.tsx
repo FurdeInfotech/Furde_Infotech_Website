@@ -48,7 +48,7 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [submittedName, setSubmittedName] = React.useState<string | null>(null);
 
   // State to track the selected month and year
