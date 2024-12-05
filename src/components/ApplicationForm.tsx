@@ -48,7 +48,7 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(true);
   const [submittedName, setSubmittedName] = React.useState<string | null>(null);
 
   // State to track the selected month and year
@@ -147,8 +147,7 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
         });
         setSubmittedName(data.firstname)
         setIsDialogOpen(true); // Show the dialog
-        // form.reset()
-        // router.back()
+       
       } else {
         const errorText = await response.text();
         toast.error(`Failed to send application: ${errorText}`, {
@@ -163,6 +162,13 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
     } finally {
       setIsLoading(false);
     }
+  };
+  const handleDialogStateChange = (open: boolean) => {
+    if (!open) {
+      form.reset()
+      router.back()
+    }
+    setIsDialogOpen(open); // Update dialog state
   };
 
   return (
@@ -877,7 +883,7 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
             name="courses"
             render={({ field }) => (
               <FormItem className=" col-span-2">
-                <FormLabel>Courses Done</FormLabel>
+                <FormLabel>Courses Done*</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Enter Courses Done"
@@ -1038,7 +1044,7 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
       </form>
     </Form>
      {/* Dialog */}
-     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+     <Dialog open={isDialogOpen} onOpenChange={handleDialogStateChange}>
      <DialogContent className=" flex justify-center items-center flex-col text-center">
        <DialogHeader>
          <DialogTitle>Thank You {submittedName} !</DialogTitle>

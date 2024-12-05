@@ -112,10 +112,14 @@ function Page() {
 
   const onSubmit = async (data: z.infer<typeof jobSchema>) => {
     setIsSubmitting(true);
+    const updatedData = {
+      ...data,
+      designation: data.designation.toLowerCase(), // Ensure designation is lowercase
+    };
     try {
       if (editJob) {
         try {
-          await axios.put(`/api/update-job/${editJob._id}`, data);
+          await axios.put(`/api/update-job/${editJob._id}`, updatedData);
           toast({ title: "Success", description: "Job updated successfully." });
         } catch (error) {
           console.log(error);
@@ -127,7 +131,7 @@ function Page() {
         }
       } else {
         try {
-          await axios.post("/api/add-job", data);
+          await axios.post("/api/add-job", updatedData);
           toast({ title: "Success", description: "Job added successfully." });
         } catch (error) {
           console.log(error);
@@ -236,7 +240,7 @@ function Page() {
               className="cardShadow relative bg-white overflow-hidden min-h-[350px] max-h-[450px] rounded-lg text-[#111827] flex flex-col max-w-full"
             >
               <div className="py-5 px-5">
-                <p className="font-semibold text-xl">{job.designation}</p>
+                <p className="font-semibold text-xl capitalize">{job.designation}</p>
                 <p className="text-base font-semibold mt-2 text-[#374151]">
                   {job.department}
                 </p>

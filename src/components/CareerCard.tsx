@@ -19,7 +19,7 @@ function CareerCard({
   return (
     <div className="cardShadow bg-white  overflow-hidden min-h-[350px] rounded-lg text-[#111827] flex justify-between flex-col">
     <div className="py-5 px-5">
-      <p className="font-semibold text-2xl">{designation}</p>
+      <p className="font-semibold text-2xl capitalize">{designation}</p>
       <p className="text-xl font-semibold  mt-2 text-[#374151]">{department}</p>
       <p className=" mt-4">{description}</p>
       <p className=" mt-4 font-semibold text-[#6B7280] flex flex-row items-center gap-2">
