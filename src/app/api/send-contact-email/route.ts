@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
     const {data, error} = await resend.emails.send({
         from: `New Message Received from <onboarding@resend.dev>`,
-        to: "padil2246@gmail.com",
+        to: "info@furdeinfotech.com",
         subject: `Message Received for ${service} query`,
         replyTo: email,
         react: ContactEmail({name: name, phone: phone, email: email, service: service})
