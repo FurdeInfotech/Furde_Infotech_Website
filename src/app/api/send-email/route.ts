@@ -210,7 +210,7 @@ export async function POST(req: Request) {
     // Attempt to send the email
     const { data, error } = await resend.emails.send({
       from: "New Application Received <onboarding@resend.dev>",
-      to: "info@furdeinfotech.com",
+      to: "padil2246@gmail.com",
       subject: `Application Received for ${designation}`,
       replyTo: email,
       react: ApplicationEmail({
