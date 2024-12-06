@@ -17,6 +17,7 @@ export async function GET() {
         status: 200,
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-store", // Disable caching
         },
       }
     );
