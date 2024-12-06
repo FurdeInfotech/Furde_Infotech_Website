@@ -98,13 +98,11 @@ function Page() {
       await axios.delete(`/api/delete-photo/${deleteGalleryId}`);
       toast({ title: "Success", description: "Photo deleted successfully." });
 
-      // Optimistically update the UI by removing the deleted item
-      setGalleryItems((prevItems) =>
-        prevItems.filter((item) => item._id !== deleteGalleryId)
-      );
+      
 
       // Clear the delete ID
-      setDeleteGalleryId(null);
+      setDeleteGalleryId(null)
+      fetchGalleryItems()
     } catch (error) {
       console.error("Failed to delete photo:", error);
       toast({
@@ -126,7 +124,7 @@ function Page() {
         formData.append("image", data.image);
       }
 
-      const response = await axios.post("/api/add-photo", formData, {
+       await axios.post("/api/add-photo", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -134,9 +132,6 @@ function Page() {
         title: "Success",
         description: "Photo added to the gallery successfully!",
       });
-
-      // Optimistically update the UI by adding the new item
-      setGalleryItems((prevItems) => [...prevItems, response.data]);
 
       // Close the dialog
       setDialogOpen(false);
