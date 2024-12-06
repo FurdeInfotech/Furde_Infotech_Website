@@ -5,7 +5,7 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const gallery = await GalleryModel.find().sort({ createdAt: -1 });
+    const gallery = await GalleryModel.find();
    
 
     return new Response(
