@@ -33,7 +33,7 @@ export default function Hero() {
           className="-z-[10]" // Ensure the image is behind other content
           priority
         />
-      {/* check */}
+
         <div className="absolute md:top-[25%] top-[20%] md:pl-20 px-5 w-full">
           <h1 className="text-[#9CA3AF] md:text-7xl text-3xl font-bold ">
             Welcome to{" "}
