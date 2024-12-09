@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
-import axios from "axios";
 import { Skeleton } from "./ui/skeleton";
 
 type Gallery = {
