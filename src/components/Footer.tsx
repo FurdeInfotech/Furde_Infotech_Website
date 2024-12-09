@@ -233,8 +233,8 @@ export default function Footer() {
           <ContactForm />
         </div>
       </div>
-      <div className=" text-[#9ca3af] absolute bottom-0 w-full flex justify-center items-center text-xs sm:text-base pb-3">
-        <p>
+      <div className=" text-[#9ca3af] absolute bottom-0 w-full flex justify-center items-center text-xs sm:text-base ">
+        <p className="sm:pt-0 sm:pb-3 pt-96 pb-1">
           Copyright &copy; <span>{year}</span>{" "}
           <span className=" text-white">Furde Infotech</span> | All Rights
           Reserved.
