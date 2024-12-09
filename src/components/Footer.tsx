@@ -120,7 +120,7 @@ export default function Footer() {
             </p>
           </Link>
 
-          <div className=" flex md:flex-row flex-col-reverse mt-10 gap-20">
+          <div className=" flex md:flex-row flex-col-reverse mt-10 sm:pb-0 pb-8 gap-20">
             <div>
               <h2 className=" text-3xl font-semibold">Quick Links</h2>
               <ul className=" mt-8 flex md:flex-col flex-row text-[#9CA3AF] md:justify-center md:items-start items-center justify-between md:gap-5 md:text-base text-xs">
@@ -233,8 +233,8 @@ export default function Footer() {
           <ContactForm />
         </div>
       </div>
-      <div className=" text-[#9ca3af] absolute bottom-0 w-full flex justify-center items-center text-xs sm:text-base ">
-        <p className="sm:pt-0 sm:pb-3 pt-96 pb-1">
+      <div className=" text-[#9ca3af] absolute bottom-0 w-full flex justify-center items-center text-xs sm:text-base pt-0 pb-3">
+        <p>
           Copyright &copy; <span>{year}</span>{" "}
           <span className=" text-white">Furde Infotech</span> | All Rights
           Reserved.
