@@ -32,16 +32,23 @@ function Gallery() {
   const fetchGalleryItems = async () => {
     setLoading(true);
     try {
-      const response = await axios.get<{ gallery: Gallery[] }>(
-        "/api/get-photo"
-      );
-      setGalleryItems(response.data.gallery);
-      console.log(response.data.gallery);
+      const response = await fetch("/api/get-photo", {
+        method: "GET",
+        cache: "no-store", // Disable caching for fresh data
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch gallery items");
+      }
+
+      const data = await response.json();
+      setGalleryItems(data.gallery);
+      console.log(data.gallery);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast({
         title: "Try Refreshing",
-        description: `Failed to load Gallery:- ${error}`,
+        description: `Failed to load Gallery: ${error}`,
         variant: "destructive",
       });
     } finally {
