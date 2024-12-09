@@ -209,7 +209,7 @@ export async function POST(req: Request) {
 
     // Attempt to send the email
     const { data, error } = await resend.emails.send({
-      from: "New Application Received <onboarding@resend.dev>",
+      from: "New Application Received <info@furdeinfotech.com>",
       to: "info@furdeinfotech.com",
       subject: `Application Received for ${designation}`,
       replyTo: email,
