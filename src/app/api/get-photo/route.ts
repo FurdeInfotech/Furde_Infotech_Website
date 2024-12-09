@@ -1,15 +1,15 @@
 import dbConnect from "@/lib/dbConnect";
 import GalleryModel from "@/models/Gallery";
+import { revalidateTag } from "next/cache";
 
 export async function GET() {
   try {
-    // Connect to the database
     await dbConnect();
 
-    // Fetch gallery items, sorted by most recent
     const gallery = await GalleryModel.find({}).sort({ createdAt: -1 });
 
-    // Return the response with Cache-Control header
+    revalidateTag("gallery"); // Invalidate cache for this tag
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -19,7 +19,9 @@ export async function GET() {
         status: 200,
         headers: {
           "Content-Type": "application/json",
-          "Cache-Control": "no-store", // Disable ISR caching
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate", // Enforce no caching
+          "Pragma": "no-cache",
+          "Expires": "0",
         },
       }
     );
@@ -34,8 +36,12 @@ export async function GET() {
         status: 500,
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0",
         },
       }
     );
   }
 }
+
