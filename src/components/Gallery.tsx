@@ -6,6 +6,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "./ui/skeleton";
+import { X } from "lucide-react";
 
 type Gallery = {
   id: string;
@@ -21,6 +22,20 @@ function Gallery() {
   const [filterValue, setFilterValue] = useState("All");
   const [galleryItems, setGalleryItems] = useState<Gallery[]>([]);
   const [loading, setLoading] = useState(true);
+  const [openImage, setOpenImage] = useState<{
+    image: string;
+    orientation: string;
+  } | null>(null); // Store the clicked image and orientation
+
+  const handleImageClick = (image: string, orientation: string) => {
+    setOpenImage({ image, orientation }); // Set the clicked image and orientation
+    document.body.style.overflow = "hidden"; // Disable scrolling
+  };
+
+  const closeOverlay = () => {
+    setOpenImage(null); // Clear the image
+    document.body.style.overflow = ""; // Enable scrolling
+  };
 
   const { toast } = useToast();
 
@@ -103,7 +118,10 @@ function Gallery() {
         {loading ? (
           <>
             {Array.from({ length: 8 }).map((_, index) => (
-              <Skeleton className=" bg-gray-100 w-72 h-80" key={index} />
+              <Skeleton
+                className=" bg-gray-200 rounded-lg sm:w-72 sm:h-80 w-32 h-56"
+                key={index}
+              />
             ))}
           </>
         ) : (
@@ -126,26 +144,56 @@ function Gallery() {
                   src={item.image}
                   alt={item.title}
                   layout="responsive"
-                
                   width={100}
                   height={100}
                   className="rounded-lg object-cover transition group-hover:blur-sm"
                 />
+
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.1, ease: "easeOut" }}
                   className="absolute z-40 hidden bg-black/50 h-full w-full px-2 transition group-hover:flex rounded-lg items-center justify-center"
+                  onClick={() => handleImageClick(item.image, item.orientation)} // Open overlay on click
                 >
-                  <p className="sm:text-base text-sm font-semibold text-white">{item.title}</p>
+                  <p className="sm:text-base text-sm font-semibold text-white">
+                    {item.title}
+                  </p>
                 </motion.div>
               </motion.div>
             ))}
           </AnimatePresence>
         )}
       </div>
-
-      <div className=" "> </div>
+      <AnimatePresence>
+        {openImage && (
+          <motion.div
+            className="fixed inset-0 bg-[#1f1f1f] bg-opacity-85 z-[1000] flex items-center justify-center transition-opacity"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeOverlay}
+          >
+            <X
+              className="text-white absolute right-10 top-10 cursor-pointer"
+              size={30}
+              strokeWidth={2.5}
+              onClick={closeOverlay} // Close overlay on X click
+            />
+            <div className="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+              <Image
+                src={openImage.image}
+                alt="Selected"
+                width={openImage.orientation === "vertical" ? 500 : 950} // Dynamically set width
+                height={openImage.orientation === "vertical" ? 800 : 600} // Adjust height accordingly
+                className="rounded-md"
+                placeholder="blur"
+                blurDataURL={openImage.image}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
