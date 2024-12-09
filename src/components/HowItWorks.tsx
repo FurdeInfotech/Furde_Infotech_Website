@@ -117,6 +117,7 @@ export default function HowItWorks() {
                       quality={90}
                       priority
                       className="cardShadow rounded-xl"
+                      placeholder="blur"
                     />
                   </div>
                   <p className="md:ml-5 ml-0 md:text-sm text-[10px] text-[#6B7280]">
