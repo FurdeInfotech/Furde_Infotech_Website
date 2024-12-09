@@ -153,12 +153,13 @@ function Gallery() {
                   initial={{ opacity: 0, scale: 0.5 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.1, ease: "easeOut" }}
-                  className="absolute z-40 hidden bg-black/50 h-full w-full px-2 transition group-hover:flex rounded-lg items-center justify-center"
+                  className="absolute z-40 hidden bg-black/50 h-full w-full px-2 transition group-hover:flex flex-col rounded-lg items-center justify-center"
                   onClick={() => handleImageClick(item.image, item.orientation)} // Open overlay on click
                 >
-                  <p className="sm:text-base text-sm font-semibold text-white">
+                  <p className="sm:text-base text-xs font-semibold text-white">
                     {item.title}
                   </p>
+                  <p className=" sm:text-xs text-[7px] text-white mt-5">click to view</p>
                 </motion.div>
               </motion.div>
             ))}
