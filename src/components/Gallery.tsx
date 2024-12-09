@@ -156,7 +156,7 @@ function Gallery() {
                   className="absolute z-40 hidden bg-black/50 h-full w-full px-2 transition group-hover:flex flex-col rounded-lg items-center justify-center"
                   onClick={() => handleImageClick(item.image, item.orientation)} // Open overlay on click
                 >
-                  <p className="sm:text-base text-xs font-semibold text-white">
+                  <p className="sm:text-base text-[10px] font-semibold text-white">
                     {item.title}
                   </p>
                   <p className=" sm:text-xs text-[7px] text-white mt-5">click to view</p>
