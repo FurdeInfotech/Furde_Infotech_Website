@@ -137,7 +137,7 @@ function Gallery() {
                   transition={{ duration: 0.1, ease: "easeOut" }}
                   className="absolute z-40 hidden bg-black/50 h-full w-full px-2 transition group-hover:flex rounded-lg items-center justify-center"
                 >
-                  <p className=" font-semibold text-white">{item.title}</p>
+                  <p className="sm:text-base text-sm font-semibold text-white">{item.title}</p>
                 </motion.div>
               </motion.div>
             ))}
