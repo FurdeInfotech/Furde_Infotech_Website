@@ -119,7 +119,7 @@ function Gallery() {
           <>
             {Array.from({ length: 8 }).map((_, index) => (
               <Skeleton
-                className=" bg-gray-200 rounded-lg sm:w-72 sm:h-80 w-32 h-56"
+                className=" bg-gray-200 rounded-lg  sm:h-80 w-full h-56"
                 key={index}
               />
             ))}
