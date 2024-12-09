@@ -144,6 +144,8 @@ function Gallery() {
           </AnimatePresence>
         )}
       </div>
+
+      <div className=" "> </div>
     </div>
   );
 }
