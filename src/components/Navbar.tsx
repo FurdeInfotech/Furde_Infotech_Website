@@ -252,8 +252,13 @@ export default function Navbar() {
               );
             }
 
+             // Check if "Careers" should be active for its page and related sub-pages
+             const isCareersActive =
+             nav.title === "Careers" &&
+             (["/careers", "/open-roles", "/experienced-level-roles", "/entry-level-roles"].includes(pathname) ||
+               pathname.startsWith("/apply/"));
             const isSidebarActive =
-              pathname === nav.link || pathname.startsWith(nav.link + "/");
+              pathname === nav.link || pathname.startsWith(nav.link + "/") || isCareersActive;
 
             return (
               <Link
