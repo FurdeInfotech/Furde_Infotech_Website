@@ -144,15 +144,9 @@ const ServiceDetails = async ({ params }: ServiceDetailsProps) => {
     </section>
   );
 };
+export default ServiceDetails;
 
 
-export default function ServiceDetailsWithLoader(props: ServiceDetailsProps) {
-  return (
-    <Suspense fallback={<Loading />}>
-      <ServiceDetails {...props} />
-    </Suspense>
-  );
-}
 {
   /* <div
       style={{
