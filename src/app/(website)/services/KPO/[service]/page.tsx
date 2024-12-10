@@ -2,8 +2,7 @@ import { notFound } from "next/navigation";
 
 import Image from "next/image";
 import { kpoServices } from "@/lib/data";
-import { Suspense } from "react";
-import Loading from "@/components/Loading";
+
 
 interface ServiceDetailsProps {
   params: {

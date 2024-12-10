@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { itServices } from "@/lib/data";
 import Image from "next/image";
-import { Suspense } from "react";
-import Loading from "@/components/Loading";
+
 
 interface ServiceDetailsProps {
   params: {
