@@ -42,7 +42,7 @@ export default function AboutUs() {
               Our Story
             </Link>
             <Link
-              href=""
+              href="/contact-us"
               className=" border border-white rounded font-semibold text-white text-sm w-36 flex items-center justify-center py-2 hover:bg-white hover:text-black duration-500"
             >
               Contact Us
