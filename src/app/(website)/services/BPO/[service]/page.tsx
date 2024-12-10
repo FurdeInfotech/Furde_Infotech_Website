@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
-
 import Image from "next/image";
 import { bpoServices } from "@/lib/data";
+import { Suspense } from "react";
+
+import Loading from "@/components/Loading";
 
 interface ServiceDetailsProps {
   params: {
@@ -23,7 +25,7 @@ const ServiceDetails = async ({ params }: ServiceDetailsProps) => {
     (item) => item.link.split("/").pop() === params.service
   );
 
-  console.log(serviceData?.cards);
+
   // Handle if no data found
   if (!serviceData) {
     notFound();
@@ -138,8 +140,14 @@ const ServiceDetails = async ({ params }: ServiceDetailsProps) => {
   );
 };
 
-export default ServiceDetails;
 
+export default function ServiceDetailsWithLoader(props: ServiceDetailsProps) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ServiceDetails {...props} />
+    </Suspense>
+  );
+}
 {
   /* <div
       style={{
