@@ -1001,7 +1001,7 @@ export default function ApplicationForm({ designation }: ApplicationFormProps) {
                         />
                         <label
                           htmlFor="resume-upload"
-                          className="text-gray-600 cursor-pointer"
+                          className="text-gray-600 cursor-pointer w-full"
                         >
                           {fileName ? fileName : "Click to attach your resume"}
                         </label>
