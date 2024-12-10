@@ -42,6 +42,7 @@ const ServiceDetails = async ({ params }: ServiceDetailsProps) => {
           quality={100}
           className="-z-[10]" // Ensure the image is behind other content
           priority
+          placeholder="blur"
         />
         <div className="absolute top-1/2 left-0 transform -translate-y-1/2 md:pl-20 px-5 w-full sm:w-1/2">
           <h1 className=" text-4xl font-bold leading-tight text-white">
@@ -67,6 +68,7 @@ const ServiceDetails = async ({ params }: ServiceDetailsProps) => {
                     src={card.image}
                     alt={card.title}
                     className="rounded-md cardShadow"
+                    placeholder="blur"
                   />
                 </div>
 
@@ -110,6 +112,7 @@ const ServiceDetails = async ({ params }: ServiceDetailsProps) => {
                     src={card.image}
                     alt={card.title}
                     className="rounded-md cardShadow"
+                    placeholder="blur"
                   />
                 </div>
               </>
@@ -127,7 +130,9 @@ const ServiceDetails = async ({ params }: ServiceDetailsProps) => {
               src={card.image}
               alt={card.title}
               className="rounded-md cardShadow mt-6"
+              placeholder="blur"
             />
+     
             <ul className="mt-8 flex flex-col gap-4 text-gray-500 list-disc pl-5">
               {card.descriptionLines.map((line, lineIndex) => (
                 <li key={lineIndex}>{line}</li>
