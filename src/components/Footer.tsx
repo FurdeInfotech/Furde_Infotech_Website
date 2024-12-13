@@ -226,7 +226,7 @@ export default function Footer() {
 
         {/* Rightside */}
 
-        <div className="w-full md:w-1/2 pl-0 md:pl-40">
+        <div className="w-full md:w-1/2 pl-0 md:mt-3 mt-0 md:pl-40">
           <h1 className="text-3xl mb-10 md:mt-24 font-semibold leading-tight">
             Contact Us
           </h1>

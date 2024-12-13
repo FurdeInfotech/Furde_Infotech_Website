@@ -69,7 +69,7 @@ export default function Hero() {
             <button
               type="button"
               onClick={handleClick}
-              className="border border-white rounded bg-transparent text-white text-sm md:w-36 w-full flex items-center gap-2 justify-center py-2 hover:bg-[#F43F5E] hover:border-[#F43F5E] duration-500"
+              className="border border-white font-semibold rounded bg-transparent text-white text-sm md:w-36 w-full flex items-center gap-2 justify-center py-2 hover:bg-[#F43F5E] hover:border-[#F43F5E] duration-500"
             >
               <link
                 href="https://assets.calendly.com/assets/external/widget.css"
