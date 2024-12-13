@@ -42,6 +42,7 @@ export default function CurrentOpenRoles() {
         "/api/get-job?level=Entry&limit=3"
       );
       setEntryJobs(response.data.jobs);
+      console.log(response)
     } catch (error) {
       console.log(error);
       toast({

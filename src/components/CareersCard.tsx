@@ -18,7 +18,6 @@ type Job = {
   type: "Full Time" | "Part Time" | "Internship";
 };
 
-
 export default function CareersCard() {
   const [entryjobs, setEntryJobs] = useState<Job[]>([]);
   const [entryLoading, setEntryLoading] = useState(true);
@@ -77,20 +76,31 @@ export default function CareersCard() {
         ENTRY LEVEL INTERNSHIPS
       </h1>
       <div className="mt-10 flex justify-between items-center md:text-base text-[13px]">
-        <p className=" text-[#4B5563] ">Kickstart Your Career Journey.</p>
         {entryLoading ? (
-          <Skeleton className="sm:w-20 w-14 sm:h-5 h-3" />
+          <>
+            <Skeleton className="sm:w-40 w-20 sm:h-5 h-3" />
+            <Skeleton className="sm:w-20 w-14 sm:h-5 h-3" />
+          </>
         ) : (
-          <Link
-            href="/entry-level-roles"
-            className={` ${
-              entryjobs.length === 0
-                ? "hidden"
-                : "block text-[#1D4ED8] hover:text-[#1E3A8A] duration-200"
-            }`}
-          >
-            View More
-          </Link>
+          <>
+            <p
+              className={` ${
+                entryjobs.length <= 3 ? "hidden" : "block text-[#4B5563]"
+              }`}
+            >
+              Kickstart Your Career Journey.
+            </p>
+            <Link
+              href="/entry-level-roles"
+              className={` ${
+                entryjobs.length <= 3
+                  ? "hidden"
+                  : "block text-[#1D4ED8] hover:text-[#1E3A8A] duration-200"
+              }`}
+            >
+              View More
+            </Link>
+          </>
         )}
       </div>
 
@@ -102,7 +112,7 @@ export default function CareersCard() {
             ))}
           </>
         ) : entryjobs.length === 0 ? (
-          <JobsNotFound/>
+          <JobsNotFound />
         ) : (
           entryjobs.map((job) => {
             return (
@@ -122,35 +132,43 @@ export default function CareersCard() {
         Experienced Opportunities
       </h1>
       <div className=" mt-10 flex justify-between items-center md:text-base text-[13px]">
-        <p className=" text-[#4B5563] ">
-          Bring Your Expertise to Our department.
-        </p>
-
         {experiencedLoading ? (
-          <Skeleton className="sm:w-20 w-14 sm:h-5 h-3" />
+          <>
+            <Skeleton className="sm:w-40 w-20 sm:h-5 h-3" />
+            <Skeleton className="sm:w-20 w-14 sm:h-5 h-3" />
+          </>
         ) : (
-          <Link
-            href="/experienced-level-roles"
-            className={` ${
-              experiencedjobs.length === 0
-                ? "hidden"
-                : "block text-[#1D4ED8] hover:text-[#1E3A8A] duration-200"
-            }`}
-          >
-            View More
-          </Link>
+          <>
+            <p
+              className={` ${
+                entryjobs.length <= 3 ? "hidden" : "block text-[#4B5563]"
+              }`}
+            >
+              Bring Your Expertise to Our department.
+            </p>
+            <Link
+              href="/experienced-level-roles"
+              className={` ${
+                experiencedjobs.length <= 3
+                  ? "hidden"
+                  : "block text-[#1D4ED8] hover:text-[#1E3A8A] duration-200"
+              }`}
+            >
+              View More
+            </Link>
+          </>
         )}
       </div>
 
       <div className="grid mt-12 grid-cols-1 md:grid-cols-3 gap-10">
-      {experiencedLoading ? (
+        {experiencedLoading ? (
           <>
             {Array.from({ length: 3 }).map((_, index) => (
               <JobCardLoading key={index} />
             ))}
           </>
         ) : experiencedjobs.length === 0 ? (
-          <JobsNotFound/>
+          <JobsNotFound />
         ) : (
           experiencedjobs.map((job) => {
             return (

@@ -37,14 +37,11 @@ export async function GET(request: Request) {
       .sort({ createdAt: -1 }) // Sort by most recent
       .limit(safeJobsLimit); // Apply the limit (safeJobsLimit will be Infinity if no limit)
 
-    // If no jobs are found, send a 404 response
-    if (!jobs || jobs.length === 0) {
+    if (formattedDesignation && jobs.length === 0) {
       return new Response(
         JSON.stringify({
           success: false,
-          message: formattedDesignation
-            ? "Job with the specified designation does not exist"
-            : "No jobs found",
+          message: "Job no longer available or does not exist !",
         }),
         { status: 404 }
       );
