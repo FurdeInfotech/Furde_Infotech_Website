@@ -7,7 +7,7 @@ import Social from '@/components/Social';
 function ContactUs() {
   return (
 <section>
-      <div className="relative min-h-screen">
+      <div className="relative min-h-[120vh]">
         <Image
           src={bg}
           alt="Background Image"
@@ -17,7 +17,7 @@ function ContactUs() {
           className="-z-[10]" // Ensure the image is behind other content
           priority
         />
-        <div className="absolute md:top-[85%] top-[78%] left-0 transform md:-translate-y-[75%] -translate-y-[78%] md:pl-20 px-5 md:w-1/2 w-full">
+        <div className="absolute md:top-[80%] top-[78%] left-0 transform md:-translate-y-[80%] -translate-y-[78%] md:pl-20 px-5 md:w-1/2 w-full">
           <h1 className=" text-4xl font-bold leading-tight text-white">
           CONTACT US
           </h1>
