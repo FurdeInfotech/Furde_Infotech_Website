@@ -87,7 +87,7 @@ export default function Navbar() {
     <>
       {/* Navbar */}
       <motion.nav
-        className="glass-effect fixed w-full z-50 md:pl-20 px-5 py-5 md:pr-20 flex items-center justify-between"
+        className="glass-effect absolute w-full z-50 md:pl-20 px-5 py-5 md:pr-20 flex items-center justify-between"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}

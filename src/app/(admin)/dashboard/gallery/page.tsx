@@ -333,24 +333,24 @@ function Page() {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem className=" cursor-pointer">
-                    <FormLabel>Image*</FormLabel>
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0]; // Get the selected file
-                        field.onChange(file); // Update the field with the selected file
-                      }}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="image"
+                  render={({ field }) => (
+                    <FormItem className=" cursor-pointer">
+                      <FormLabel>Image*</FormLabel>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]; // Get the selected file
+                          field.onChange(file); // Update the field with the selected file
+                        }}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
               <DialogFooter className=" pt-3">
                 <DialogClose asChild className="sm:mt-0 mt-3 sm:w-auto w-full">
