@@ -23,7 +23,7 @@ export default function OurStory() {
     },
     {
       year: "2003",
-      title: "Furde Constructions Pvt. Ltd.",
+      title: "Furde Constructions Private Limited",
       description:
         "Furde Constructions was born as a testament to our growing ambition. We focused on innovative designs and sustainable construction practices, ensuring that every project meets the highest standards of quality.",
     },
@@ -41,7 +41,7 @@ export default function OurStory() {
     },
     {
       year: "2024",
-      title: "Furde Infotech Pvt. Ltd.",
+      title: "Furde Infotech Private Limited",
       description:
         "We took a significant leap forward with the establishment of Furde Infotech Pvt. Ltd. This marks our entry into the world of technology and BPO services, driven by the same values that have guided us for over three decades - Innovative ideas, Dynamic Results.",
     },

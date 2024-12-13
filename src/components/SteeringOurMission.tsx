@@ -15,7 +15,7 @@ export default function SteeringOurMission() {
           <h2 className="mt-2 font-semibold text-2xl">Managing Director</h2>
           <h3 className="mt-5 font-semibold text-3xl">Rohan Furde</h3>
           <p className="mt-5">
-            Rohan Furde, a graduate in Software Engineering from Walchand Institute of Technology, Solapur, is a dynamic entrepreneur and technology enthusiast. Currently serving as Director at Furde Constructions, he has embarked on a new journey as the Founder & Director of Furde Infotech Pvt Ltd. Here, he focuses on developing advanced applications designed to foster business growth and enhance monitoring capabilities. Rohan brings a blend of technical expertise and strategic vision to drive innovation and deliver impactful solutions in the tech industry.
+            Rohan Furde, a graduate in Software Engineering from Walchand Institute of Technology, Solapur, is a dynamic entrepreneur and technology enthusiast. Currently serving as Director at Furde Constructions, he has embarked on a new journey as the Founder & Chairman of Furde Infotech Pvt Ltd. Here, he focuses on developing advanced applications designed to foster business growth and enhance monitoring capabilities. Rohan brings a blend of technical expertise and strategic vision to drive innovation and deliver impactful solutions in the tech industry.
           </p>
         </div>
         <div className="sm:w-[35%] w-full sm:h-[500px] relative overflow-hidden rounded-lg cardShadow">
