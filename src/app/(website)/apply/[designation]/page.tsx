@@ -40,14 +40,25 @@ export default function ApplyForm({ params }: ApplyFormProps) {
           `/api/get-job?designation=${encodedDesignation}`
         );
 
-        if (response.data.success && response.data.jobs.length > 0) {
-          setJob(response.data.jobs[0]);
+        if (response.status === 200 && response.data.success) {
+          if (response.data.jobs.length > 0) {
+            setJob(response.data.jobs[0]);
+          } else {
+            setError("Job not found."); // This case shouldn't occur with updated backend
+          }
         } else {
-          setError("Job not found.");
+          setError(response.data.message || "Unexpected error occurred.");
         }
-      } catch (err) {
-        console.error("Error fetching job:", err);
-        setError("Job not found or please refresh the page");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        if (err.response && err.response.status === 404) {
+          // Handle backend 404 response
+          setError(err.response.data.message || "Job not found.");
+        } else {
+          // Handle other errors (e.g., network issues)
+          console.error("Error fetching job:", err);
+          setError("An error occurred. Please try again later.");
+        }
       } finally {
         setLoading(false);
       }

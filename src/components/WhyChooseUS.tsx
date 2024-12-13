@@ -98,7 +98,7 @@ export default function WhyChooseUS() {
       </div>
 
       <div className="md:pl-20 pb-10 px-5 mt-12">
-        <p className="text-[#9CA3AF] text-md">
+        <p className="text-white text-md">
           Discover our story and explore what sets us apart.
         </p>
         <Link
