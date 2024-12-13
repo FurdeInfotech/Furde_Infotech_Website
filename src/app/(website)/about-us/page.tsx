@@ -27,12 +27,7 @@ export default function AboutUs() {
             and integrity, continuously evolving to meet the challenges of a
             dynamic business landscape. With a strong foundation built on
             dedication and a passion for delivering impactful solutions, we
-            empower businesses to achieve more.Furde Infotech is driven by a
-            commitment to innovation, excellence, and integrity, continuously
-            evolving to meet the challenges of a dynamic business landscape.
-            With a strong foundation built on dedication and a passion for
-            delivering impactful solutions, we empower businesses to achieve
-            more.
+            empower businesses to achieve more.
           </p>
           <div className=" flex flex-row gap-5 mt-16 w-full">
             <Link
