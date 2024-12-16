@@ -85,7 +85,7 @@ export default function CareersCard() {
           <>
             <p
               className={` ${
-                entryjobs.length <= 3 ? "hidden" : "block text-[#4B5563]"
+                entryjobs.length === 0 ? "hidden" : "block text-[#4B5563]"
               }`}
             >
               Kickstart Your Career Journey.
@@ -141,7 +141,7 @@ export default function CareersCard() {
           <>
             <p
               className={` ${
-                entryjobs.length <= 3 ? "hidden" : "block text-[#4B5563]"
+                entryjobs.length === 0 ? "hidden" : "block text-[#4B5563]"
               }`}
             >
               Bring Your Expertise to Our department.
