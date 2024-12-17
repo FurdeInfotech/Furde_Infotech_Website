@@ -197,7 +197,7 @@ export const itServices: ITService[] = [
         image: mobile2,
         title: "iOS app Development",
         descriptionLines: [
-          "Specialized in creating apps for",
+          "Specialized in creating apps for IOS platform",
           "Seamless integration with existing systems and workflows",
           "Built with scalability and flexibility for future growth",
           "Ensures high security and data protection measures",
