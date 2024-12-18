@@ -141,7 +141,7 @@ export default function CareersCard() {
           <>
             <p
               className={` ${
-                entryjobs.length === 0 ? "hidden" : "block text-[#4B5563]"
+                experiencedjobs.length === 0 ? "hidden" : "block text-[#4B5563]"
               }`}
             >
               Bring Your Expertise to Our department.
