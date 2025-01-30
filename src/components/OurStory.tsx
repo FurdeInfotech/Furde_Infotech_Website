@@ -108,9 +108,9 @@ export default function OurStory() {
 
       {/* Careers Section */}
       <div className="mt-10 flex flex-col py-10 z-10 text-black">
-        <h1 className="text-4xl font-bold leading-tight">Our Story</h1>
+        <h1 className="text-4xl font-bold leading-tight">JOIN OUR TEAM</h1>
         <p className="mt-5 text-md text-[#4B5563]">
-          Building Legacy of Trust and Excellence.
+        Ready to unlock your potential? Join us today!
         </p>
         <Link
           href="/careers"
