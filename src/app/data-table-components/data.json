@@ -1,0 +1,42 @@
+[
+  {
+    "empid": "SOL-AP-03",
+    "empname": "Adil Patel",
+    "empmobile": 9503304568,
+    "empemergencymobile": 9595184779,
+    "empbloodgroup": "A+",
+    "empimage": "https://i.pravatar.cc/300"
+  },
+  {
+    "empid": "SOL-FS-04",
+    "empname": "Faiyaz Shaikh",
+    "empmobile": 9168001115,
+    "empemergencymobile": 7020575081,
+    "empbloodgroup": "B+",
+    "empimage": "https://i.pravatar.cc/300"
+  },
+  {
+    "empid": "SOL-AZ-05",
+    "empname": "Azhar Shaikh",
+    "empmobile": 8669006511,
+    "empemergencymobile": 9503304568,
+    "empbloodgroup": "AB+",
+    "empimage": "https://i.pravatar.cc/300"
+  },
+  {
+    "empid": "SOL-MS-06 ",
+    "empname": "Moin Shaikh",
+    "empmobile": 7028722656,
+    "empemergencymobile": 9595184779,
+    "empbloodgroup": "O-",
+    "empimage": "https://i.pravatar.cc/300"
+  },
+  {
+    "empid": "SOL-KP-01",
+    "empname": "Kunal Pawar",
+    "empmobile": 9503304568,
+    "empemergencymobile": 7020575081,
+    "empbloodgroup": "O+",
+    "empimage": "https://i.pravatar.cc/300"
+  }
+]

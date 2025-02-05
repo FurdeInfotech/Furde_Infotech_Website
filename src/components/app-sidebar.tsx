@@ -1,5 +1,5 @@
 "use client"
-import { Home, BriefcaseBusiness, LogOut, Image as ImageIcon } from "lucide-react";
+import { Home, BriefcaseBusiness, LogOut, Image as ImageIcon, User } from "lucide-react";
 import logo from "@/assets/fitmain.png"
 import {
   Sidebar,
@@ -30,10 +30,16 @@ const items = [
     icon: BriefcaseBusiness,
   },
   {
+    title: "Employees ID",
+    url: "/dashboard/employees-id",
+    icon: User,
+  },
+  {
     title: "Gallery",
     url: "/dashboard/gallery",
     icon: ImageIcon,
   },
+ 
 ];
 
 export function AppSidebar() {
