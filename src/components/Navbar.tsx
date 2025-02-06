@@ -79,7 +79,7 @@ export default function Navbar() {
     };
   }, [sidebarOpen]);
 
-  if (pathname.startsWith("/dashboard")) {
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/employees")) {
     return <div></div>;
   }
 

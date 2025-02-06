@@ -6,15 +6,15 @@ import { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+
 // import { DataTableViewOptions } from "@/components/ui/data-table-view-options";
 
-import { useState } from "react";
+
 
 import { TrashIcon } from "lucide-react";
-import { CalendarDatePicker } from "@/components/calendar-date-picker";
+
 import { DataTableViewOptions } from "./data-table-view-options";
-import { categories, incomeType } from "./data";
+
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -25,16 +25,16 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
-  const [dateRange, setDateRange] = useState<{ from: Date; to: Date }>({
-    from: new Date(new Date().getFullYear(), 0, 1),
-    to: new Date(),
-  });
+  // const [dateRange, setDateRange] = useState<{ from: Date; to: Date }>({
+  //   from: new Date(new Date().getFullYear(), 0, 1),
+  //   to: new Date(),
+  // });
 
-  const handleDateSelect = ({ from, to }: { from: Date; to: Date }) => {
-    setDateRange({ from, to });
-    // Filter table data based on selected date range
-    table.getColumn("date")?.setFilterValue([from, to]);
-  };
+  // const handleDateSelect = ({ from, to }: { from: Date; to: Date }) => {
+  //   setDateRange({ from, to });
+  //   // Filter table data based on selected date range
+  //   table.getColumn("date")?.setFilterValue([from, to]);
+  // };
 
   return (
     <div className="flex flex-wrap items-center justify-between">

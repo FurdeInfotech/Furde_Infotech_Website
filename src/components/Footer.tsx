@@ -72,7 +72,7 @@ export default function Footer() {
 
   if (pathname === "/contact-us") {
     return <FooterContact />;
-  } else if (pathname.startsWith("/dashboard")) {
+  } else if (pathname.startsWith("/dashboard") || pathname.startsWith("/employees")) {
     return <div></div>;
   }
   return (

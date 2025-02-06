@@ -9,30 +9,30 @@ import { DataTableRowActions } from "./data-table-row-actions";
 import { Expense } from "./schema";
 
 export const columns: ColumnDef<Expense>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-0.5"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-0.5"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //       className="translate-y-0.5"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //       className="translate-y-0.5"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
  
   {
     accessorKey: "empimage",
@@ -106,7 +106,7 @@ export const columns: ColumnDef<Expense>[] = [
       <DataTableColumnHeader column={column} title="Emergency No." />
     ),
     cell: ({ row }) => {
-      const type = row.getValue("empemergencymobile");
+     row.getValue("empemergencymobile");
       return (
         <div className="flex w-[100px] items-center">
           <span className="capitalize">
@@ -126,7 +126,7 @@ export const columns: ColumnDef<Expense>[] = [
       <DataTableColumnHeader column={column} title="Blood Group" />
     ),
     cell: ({ row }) => {
-      const type = row.getValue("type");
+     row.getValue("type");
       return (
         <div className="flex w-[50px] items-center">
           <span className={cn("capitalize")}>
