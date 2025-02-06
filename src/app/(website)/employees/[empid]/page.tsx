@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 
-function page() {
+function Page() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -99,4 +99,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
