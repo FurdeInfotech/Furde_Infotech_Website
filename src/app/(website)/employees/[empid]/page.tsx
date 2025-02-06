@@ -27,7 +27,7 @@ function Page() {
         {loading ? (
             // Show logo when loading
             <div className="relative h-full w-full">
-              <Image src="/fitmain.png" fill className="object-contain" alt="logo" />
+              <Image src="/fitmain.png" fill className="object-contain" alt="logo" priority/>
             </div>
           ) : (
             // Show animated image when loading completes
@@ -37,7 +37,7 @@ function Page() {
               transition={{ duration: 0.8, ease: "easeOut" }} // Smooth animation
               className="relative h-full w-full"
             >
-              <Image src="/AdilPatel.jpg" fill className="object-contain rounded-full" alt="employee" />
+              <Image src="/AdilPatel.jpg" fill className="object-contain rounded-full" alt="employee" priority/>
             </motion.div>
           )}
         </div>
