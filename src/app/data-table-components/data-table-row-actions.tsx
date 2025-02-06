@@ -18,7 +18,7 @@ interface DataTableRowActionsProps<TData> {
 }
 
 export function DataTableRowActions<TData>({
-  row,
+  // row,
 }: DataTableRowActionsProps<TData>) {
   // const task = taskSchema.parse(row.original);
 
