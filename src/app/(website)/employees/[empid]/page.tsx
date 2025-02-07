@@ -73,7 +73,7 @@ function Page() {
                   </td>
                   <td className="px-4 py-2 text-gray-800">
                     {loading ? (
-                      <Skeleton className="h-5 sm:w-[150px] w-[80px]" />
+                      <Skeleton className="h-7 sm:w-[150px] w-[80px]" />
                     ) : (
                       <Link href={`tel:9503304568`}>9503304568</Link>
                     )}
@@ -85,7 +85,7 @@ function Page() {
                   </td>
                   <td className="px-4 py-2 text-gray-800">
                     {loading ? (
-                      <Skeleton className="h-5 sm:w-[150px] w-[80px]" />
+                      <Skeleton className="h-7 sm:w-[150px] w-[80px]" />
                     ) : (
                       <Link href={`tel:95951847779`}>95951847779</Link>
                     )}
@@ -96,7 +96,7 @@ function Page() {
                     Blood Group :
                   </td>
                   <td className="px-4 py-2 text-gray-800">
-                    {loading ? <Skeleton className="h-5 w-[40px]" /> : "A+"}
+                    {loading ? <Skeleton className="h-7 w-[40px]" /> : "A+"}
                   </td>
                 </tr>
                 <tr>
@@ -105,7 +105,7 @@ function Page() {
                   </td>
                   <td className="px-4 py-2 text-gray-800">
                     {loading ? (
-                      <Skeleton className="h-5 sm:w-[210px] w-[100px]" />
+                      <Skeleton className="h-7 sm:w-[210px] w-[100px]" />
                     ) : (
                       "A 27/28 Aditya Nagar, Solapur"
                     )}
