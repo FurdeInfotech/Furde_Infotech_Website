@@ -117,7 +117,7 @@ function Page() {
         </div>
       </div>
       <Separator orientation="horizontal" className="" />
-      <div className=" flex justify-start items-start flex-col max-w-[30rem] sm:px-5 px-5 gap-5">
+      <div className=" flex justify-start items-start flex-col max-w-[30rem] sm:px-5 gap-5">
         <Link
           href="https://www.furdeinfotech.com"
           className=" flex justify-center items-center gap-2 flex-row"
@@ -143,7 +143,7 @@ function Page() {
           href={`https://maps.app.goo.gl/XkPbNZdn21rZPWG28`}
           className=" flex justify-center items-center gap-2 flex-row"
         >
-          <MapPin color="#ff2155" />
+          <MapPin color="#ff2155"/>
           Furde Complex Damani Nagar, Solapur - 413001
         </Link>
       </div>
