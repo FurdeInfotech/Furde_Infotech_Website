@@ -73,19 +73,19 @@ function Page() {
                   </td>
                   <td className="px-4 py-2 text-gray-800">
                     {loading ? (
-                      <Skeleton className="h-5 w-[150px]" />
+                      <Skeleton className="h-5 sm:w-[150px] w-[80px]" />
                     ) : (
                       <Link href={`tel:9503304568`}>9503304568</Link>
                     )}
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-2 font-semibold text-gray-600">
+                   <td className="px-4 py-2 font-semibold text-gray-600">
                     Emergency Mobile No. :
                   </td>
                   <td className="px-4 py-2 text-gray-800">
                     {loading ? (
-                      <Skeleton className="h-5 w-[150px]" />
+                      <Skeleton className="h-5 sm:w-[150px] w-[80px]" />
                     ) : (
                       <Link href={`tel:95951847779`}>95951847779</Link>
                     )}
@@ -105,7 +105,7 @@ function Page() {
                   </td>
                   <td className="px-4 py-2 text-gray-800">
                     {loading ? (
-                      <Skeleton className="h-5 w-[210px]" />
+                      <Skeleton className="h-5 sm:w-[210px] w-[100px]" />
                     ) : (
                       "A 27/28 Aditya Nagar, Solapur"
                     )}
