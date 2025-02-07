@@ -8,8 +8,27 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 
-function Page() {
+function Page({
+  params,
+}: {
+  params: { empid: string };
+}) {
   const [loading, setLoading] = useState(true);
+  const { empid } = params;
+
+  // useEffect(() => {
+  //   async function fetchUser() {
+  //     try {
+  //       const response = await axios.get(`/api/user/${username}`);
+  //       setUser(response.data.user);
+  //       console.log(response);
+  //     } catch (err) {
+  //       setError("User not found or an error occurred.");
+  //       console.log(err)
+  //     }
+  //   }
+  //   fetchUser();
+  // }, [username]);
 
   useEffect(() => {
     const handleloading = () => {

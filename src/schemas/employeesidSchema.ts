@@ -7,6 +7,9 @@ export const employeesIDSchema = z.object({
   empname: z
     .string()
     .min(2, { message: "Employee Name must be at least 2 characters." }),
+    emprole: z
+    .string()
+    .min(2, { message: "Employee Name must be at least 2 characters." }),
   empmobile: z
     .number()
     .min(10, { message: "Employee Mobile No. must be at least 10 digits." }),
@@ -22,4 +25,7 @@ export const employeesIDSchema = z.object({
     (file) => file.size <= 5 * 1024 * 1024, // 5 MB in bytes
     { message: "Image file size must not exceed 5 MB." }
   ),
+  empaddress: z
+  .string()
+  .min(2, { message: "Employee Name must be at least 2 characters." }),
 });

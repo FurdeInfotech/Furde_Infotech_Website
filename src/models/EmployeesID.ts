@@ -3,10 +3,12 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface EmployeesID extends Document {
   empid: string;
   empname: string;
+  emprole: string;
   empmobile: number;
   empemergencymobile: number;
   empbloodgroup: string;
   empimage: string;
+  empaddress: string
 }
 
 const EmployeesIDSchema: Schema<EmployeesID> = new mongoose.Schema(
@@ -19,6 +21,10 @@ const EmployeesIDSchema: Schema<EmployeesID> = new mongoose.Schema(
     empname: {
       type: String,
       required: [true, "Employee Name is required"],
+    },
+    emprole: {
+      type: String,
+      required: [true, "Employee Role is required"],
     },
     empmobile: {
       type: Number,
@@ -36,6 +42,10 @@ const EmployeesIDSchema: Schema<EmployeesID> = new mongoose.Schema(
     empimage: {
       type: String,
       required: [true, "Employee Image is required"],
+    },
+    empaddress: {
+      type: String,
+      required: [true, "Employee Emergency Mobile No. is required"],
     },
   },
   {

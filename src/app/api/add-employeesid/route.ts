@@ -25,20 +25,26 @@ export async function POST(request: Request) {
     const formData = await request.formData();
     const empid = formData.get("empid") as string;
     const empname = formData.get("empname") as string;
+    const emprole = formData.get("emprole") as string;
     const empmobile = formData.get("empmobile") as unknown as number;
     const empemergencymobile = formData.get(
       "empemergencymobile"
     ) as unknown as number;
     const empbloodgroup = formData.get("empbloodgroup") as string;
     const empimage = formData.get("empimage") as File;
+    const empaddress = formData.get("empaddress") as string;
+
+   
 
     if (
       !empid ||
       !empname ||
+      !emprole ||
       !empmobile ||
       !empemergencymobile ||
       !empbloodgroup ||
-      !empimage
+      !empimage ||
+      !empaddress
     ) {
       return new Response(
         JSON.stringify({
@@ -79,13 +85,18 @@ export async function POST(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { secure_url: secureUrl } = uploadResult as any;
 
+  
+    
+
     const newEmployeeID = new EmployeesIDModel({
       empid,
       empname,
+      emprole,
       empmobile,
       empemergencymobile,
       empbloodgroup,
       empimage: secureUrl,
+      empaddress
     });
 
     await newEmployeeID.save();

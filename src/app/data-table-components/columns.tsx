@@ -85,6 +85,21 @@ export const columns: ColumnDef<Expense>[] = [
     },
   },
   {
+    accessorKey: "emprole",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Employee Role" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium capitalize">
+            {row.getValue("emprole")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "empmobile",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Mobile No." />

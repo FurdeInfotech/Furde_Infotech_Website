@@ -1,38 +1,76 @@
+"use client"
 
-import { Metadata } from "next";
-import fs from "fs";
-import path from "path";
+
+
 import { DataTable } from "@/app/data-table-components/data-table";
 import { columns } from "@/app/data-table-components/columns";
+import { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
-
-export const metadata: Metadata = {
-  title: "Expenses",
-  description: "A Expense tracker build using Tanstack Table."
+type EmployeeID = {
+  _id: number;
+  empid: string;
+  empname: string;
+  emprole: string;
+  empmobile: number;
+  empemergencymobile: number;
+  empbloodgroup: "A+" | "A-" | "B-" | "O+" | "O-" | "AB+" | "AB-" | "B+";
+  empimage: string;
 };
 
-async function getData() {
-  const filePath = path.join(
-    process.cwd(),
-    "src/app/data-table-components",
-    "data.json"
-  );
-  const data = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(data);
-}
 
-export default async function Page() {
-  const data = await getData();
-  console.log("data", data);
 
+
+export default function Page() {
+  const [employeeIdItems, setEmployeeIdItems] = useState<EmployeeID[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  const fetchEmployeeIdItems = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/get-employeesid", {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        toast({
+          title: "Try Refreshing",
+          description: `Failed to load Employees`,
+          variant: "destructive",
+        });
+        throw new Error("Failed to fetch employee id items");
+      }
+
+      const data = await response.json();
+      setEmployeeIdItems(data.employees);
+      console.log(data.employees)
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Try Refreshing",
+        description: `Failed to load Employees ${error}`,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmployeeIdItems();
+  }, []);
+ 
   return (
+    
     <div className="h-full flex-1 flex-col space-y-2 p-8 md:flex">
       <div className="flex items-center justify-between">
         <p className="text-muted-foreground">
           Here&apos;s a list of your exmployees!
         </p>
       </div>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={employeeIdItems} columns={columns} loading={loading} />
     </div>
   );
 }
