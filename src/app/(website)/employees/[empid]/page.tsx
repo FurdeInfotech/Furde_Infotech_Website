@@ -44,6 +44,7 @@ function Page({ params }: { params: { empid: string } }) {
         } else {
           throw new Error(response.data.message);
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         const errorMessage =
           err.response?.data?.message ||
