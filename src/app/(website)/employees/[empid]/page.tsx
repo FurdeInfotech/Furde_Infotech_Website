@@ -26,7 +26,7 @@ function Page({ params }: { params: { empid: string } }) {
   const [loading, setLoading] = useState(true);
   const [employee, setEmployee] = useState<EmployeeProfile | null>(null);
   const [error, setError] = useState("");
-  const [found, setFound] = useState(" ");
+  const [found, setFound] = useState("");
   const { toast } = useToast();
   const { empid } = params;
 
@@ -81,10 +81,6 @@ function Page({ params }: { params: { empid: string } }) {
         <h1 className="sm:text-2xl text-xl font-bold text-gray-900">
           Employee Not Found
         </h1>
-        <Button onClick={() => window.location.reload()}>
-          <RotateCcw size={16} className=" mr-1" />
-          Retry
-        </Button>
       </div>
     );
 
