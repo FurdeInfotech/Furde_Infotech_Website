@@ -34,8 +34,6 @@ export async function POST(request: Request) {
     const empimage = formData.get("empimage") as File;
     const empaddress = formData.get("empaddress") as string;
 
-   
-
     if (
       !empid ||
       !empname ||
@@ -50,6 +48,18 @@ export async function POST(request: Request) {
         JSON.stringify({
           success: false,
           message: "All fields are required.",
+        }),
+        { status: 400 }
+      );
+    }
+
+    const existingEmployee = await EmployeesIDModel.findOne({ empid });
+
+    if (existingEmployee) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: "Employee ID already exists.",
         }),
         { status: 400 }
       );
@@ -85,9 +95,6 @@ export async function POST(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { secure_url: secureUrl } = uploadResult as any;
 
-  
-    
-
     const newEmployeeID = new EmployeesIDModel({
       empid,
       empname,
@@ -96,7 +103,7 @@ export async function POST(request: Request) {
       empemergencymobile,
       empbloodgroup,
       empimage: secureUrl,
-      empaddress
+      empaddress,
     });
 
     await newEmployeeID.save();

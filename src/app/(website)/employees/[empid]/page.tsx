@@ -1,43 +1,104 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { Globe, Mail, MapPin, Phone } from "lucide-react";
+import { Globe, Mail, MapPin, Phone, RotateCcw } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-
 import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import NoResultIcon from "@/assets/noresult.svg";
+import { Button } from "@/components/ui/button";
 
-function Page({
-  params,
-}: {
-  params: { empid: string };
-}) {
+interface EmployeeProfile {
+  empid: string;
+  empname: string;
+  emprole: string;
+  empimage?: string;
+  empaddress: string;
+  empbloodgroup?: string;
+  empmobile: number;
+  empemergencymobile: number;
+}
+
+function Page({ params }: { params: { empid: string } }) {
   const [loading, setLoading] = useState(true);
+  const [employee, setEmployee] = useState<EmployeeProfile | null>(null);
+  const [error, setError] = useState("");
+  const [found, setFound] = useState(" ");
+  const { toast } = useToast();
   const { empid } = params;
 
-  // useEffect(() => {
-  //   async function fetchUser() {
-  //     try {
-  //       const response = await axios.get(`/api/user/${username}`);
-  //       setUser(response.data.user);
-  //       console.log(response);
-  //     } catch (err) {
-  //       setError("User not found or an error occurred.");
-  //       console.log(err)
-  //     }
-  //   }
-  //   fetchUser();
-  // }, [username]);
-
   useEffect(() => {
-    const handleloading = () => {
-      setTimeout(() => {
+    console.log(empid);
+    async function fetchEmployee() {
+      setLoading(true);
+      try {
+        const response = await axios.get(`/api/get-employee/${empid}`);
+
+        if (response.data.success) {
+          setEmployee(response.data.employee);
+          setError("");
+          setFound("");
+        } else {
+          throw new Error(response.data.message);
+        }
+      } catch (err: any) {
+        const errorMessage =
+          err.response?.data?.message ||
+          "An error occurred while fetching user.";
+
+        if (err.response?.status === 404) {
+          toast({
+            title: "Not Found",
+            description: "Employee not found",
+            variant: "destructive",
+          });
+          setFound("Employee Not Found");
+        } else {
+          toast({
+            title: "Try Refreshing",
+            description: `error: ${errorMessage}`,
+            variant: "destructive",
+          });
+        }
+
+        setEmployee(null);
+        setError(errorMessage);
+      } finally {
         setLoading(false);
-      }, 3000);
-    };
-    handleloading();
-  });
+      }
+    }
+
+    fetchEmployee();
+  }, [empid]);
+
+  if (found)
+    return (
+      <div className=" w-full max-h-screen min-h-screen bg-gray-50 flex items-center flex-col py-5 sm:px-[35rem] gap-5 justify-center px-5">
+        <Image src={NoResultIcon} alt="No Result" />
+        <h1 className="sm:text-2xl text-xl font-bold text-gray-900">
+          Employee Not Found
+        </h1>
+        <Button onClick={() => window.location.reload()}>
+          <RotateCcw size={16} className=" mr-1" />
+          Retry
+        </Button>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className=" w-full max-h-screen min-h-screen bg-gray-50 flex items-center flex-col py-5 sm:px-[35rem] gap-5 justify-center px-5">
+        <Image src={NoResultIcon} alt="No Result" />
+        <h1 className="sm:text-2xl text-xl font-bold text-gray-900">{error}</h1>
+        <Button onClick={() => window.location.reload()}>
+          <RotateCcw size={16} className=" mr-1" />
+          Retry
+        </Button>
+      </div>
+    );
 
   return (
     <div className=" w-full max-h-screen min-h-screen bg-gray-50 flex items-center flex-col py-5 sm:px-[35rem] justify-between px-5">
@@ -63,7 +124,7 @@ function Page({
               className="relative h-full w-full"
             >
               <Image
-                src="/AdilPatel.jpg"
+                src={employee?.empimage || "/fitmain.png"}
                 fill
                 className="object-contain rounded-full"
                 alt="employee"
@@ -73,15 +134,21 @@ function Page({
           )}
         </div>
         <div className="flex flex-col items-center mt-4">
-          {
-            loading ? ( <Skeleton className=" w-[30%] h-6"/>) : (  <h1 className="text-2xl font-bold text-gray-900">Adil Patel</h1>)
-          }
-         
-         {
-          loading ? (<Skeleton className="w-1/2 h-6 mt-3"/>) : ( <h2 className="text-lg font-semibold text-gray-700">
-            Full-Stack Developer
-          </h2>)
-         }
+          {loading ? (
+            <Skeleton className=" w-[30%] h-6" />
+          ) : (
+            <h1 className="text-2xl font-bold text-gray-900">
+              {employee?.empname}
+            </h1>
+          )}
+
+          {loading ? (
+            <Skeleton className="w-1/2 h-6 mt-3" />
+          ) : (
+            <h2 className="text-lg font-semibold text-gray-700">
+              {employee?.emprole}
+            </h2>
+          )}
 
           <div className="w-full max-w-md mt-10">
             <table className="w-full  overflow-hidden">
@@ -94,19 +161,23 @@ function Page({
                     {loading ? (
                       <Skeleton className="h-7 sm:w-[150px] w-[80px]" />
                     ) : (
-                      <Link href={`tel:9503304568`}>9503304568</Link>
+                      <Link href={`tel:${employee?.empmobile}`}>
+                        {employee?.empmobile}
+                      </Link>
                     )}
                   </td>
                 </tr>
                 <tr>
-                   <td className="px-4 py-2 font-semibold text-gray-600">
+                  <td className="px-4 py-2 font-semibold text-gray-600">
                     Emergency Mobile No. :
                   </td>
                   <td className="px-4 py-2 text-gray-800">
                     {loading ? (
                       <Skeleton className="h-7 sm:w-[150px] w-[80px]" />
                     ) : (
-                      <Link href={`tel:95951847779`}>95951847779</Link>
+                      <Link href={`tel:${employee?.empemergencymobile}`}>
+                        {employee?.empemergencymobile}
+                      </Link>
                     )}
                   </td>
                 </tr>
@@ -115,7 +186,11 @@ function Page({
                     Blood Group :
                   </td>
                   <td className="px-4 py-2 text-gray-800">
-                    {loading ? <Skeleton className="h-7 w-[40px]" /> : "A+"}
+                    {loading ? (
+                      <Skeleton className="h-7 w-[40px]" />
+                    ) : (
+                      <> {employee?.empbloodgroup}</>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -126,7 +201,7 @@ function Page({
                     {loading ? (
                       <Skeleton className="h-7 sm:w-[210px] w-[100px]" />
                     ) : (
-                      "A 27/28 Aditya Nagar, Solapur"
+                      <>{employee?.empaddress}</>
                     )}
                   </td>
                 </tr>
@@ -162,7 +237,7 @@ function Page({
           href={`https://maps.app.goo.gl/XkPbNZdn21rZPWG28`}
           className=" flex justify-center items-center gap-2 flex-row"
         >
-          <MapPin color="#ff2155"/>
+          <MapPin color="#ff2155" />
           Furde Complex Damani Nagar, Solapur - 413001
         </Link>
       </div>

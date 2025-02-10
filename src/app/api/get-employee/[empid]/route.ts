@@ -8,11 +8,25 @@ export async function GET(
   await dbConnect();
   try {
     const { empid } = params;
-    const user = await EmployeesIDModel.findOne({ empid}).select(
-        "empname emprole empmobile empemergencymobile empbloodgroup empimage"
+    const employee = await EmployeesIDModel.findOne({ empid }).select(
+      "empname emprole empmobile empemergencymobile empbloodgroup empimage empaddress"
+    );
+
+    if (!employee) {
+      return new Response(
+        JSON.stringify({ success: false, message: "Employee Not Found" }),
+        { status: 404 }
       );
-    
+    } else {
+      return new Response(JSON.stringify({ success: true, employee }), {
+        status: 200,
+      });
+    }
   } catch (error) {
-    
+    console.log(error)
+    return new Response(
+      JSON.stringify({ success: false, message: "Internal Server Error" }),
+      { status: 500 }
+    )
   }
 }
