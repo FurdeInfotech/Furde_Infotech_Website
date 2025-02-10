@@ -9,40 +9,36 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import AddEmployee from "@/components/AddEmployee";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
+  refreshData: () => void; // Accept refresh function as a prop
 }
 
 export function DataTableViewOptions<TData>({
-  table
+  table,
+  refreshData,
 }: DataTableViewOptionsProps<TData>) {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="ml-auto hidden h-8 lg:flex"
-        >
-          <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-          View
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {table
-          .getAllColumns()
-          .filter(
-            (column) =>
-              typeof column.accessorFn !== "undefined" && column.getCanHide()
-          )
-          .map((column) => {
-            return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm" className="ml-auto hidden h-8 lg:flex">
+            <MixerHorizontalIcon className="mr-2 h-4 w-4" />
+            View
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-[150px]">
+          <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {table
+            .getAllColumns()
+            .filter((column) => typeof column.accessorFn !== "undefined" && column.getCanHide())
+            .map((column) => (
               <DropdownMenuCheckboxItem
                 key={column.id}
                 className="capitalize"
@@ -51,9 +47,12 @@ export function DataTableViewOptions<TData>({
               >
                 {column.id}
               </DropdownMenuCheckboxItem>
-            );
-          })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Pass refreshData to AddEmployee */}
+      
+    </>
   );
 }

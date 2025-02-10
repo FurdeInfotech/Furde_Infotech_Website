@@ -1,11 +1,11 @@
-"use client"
-
-
+"use client";
 
 import { DataTable } from "@/app/data-table-components/data-table";
 import { columns } from "@/app/data-table-components/columns";
 import { useEffect, useState } from "react";
+import { DataTableRowActions } from "@/app/data-table-components/data-table-row-actions";
 import { useToast } from "@/hooks/use-toast";
+import AddEmployee from "@/components/AddEmployee";
 
 type EmployeeID = {
   _id: number;
@@ -16,10 +16,8 @@ type EmployeeID = {
   empemergencymobile: number;
   empbloodgroup: "A+" | "A-" | "B-" | "O+" | "O-" | "AB+" | "AB-" | "B+";
   empimage: string;
+  empaddress: string;
 };
-
-
-
 
 export default function Page() {
   const [employeeIdItems, setEmployeeIdItems] = useState<EmployeeID[]>([]);
@@ -45,7 +43,7 @@ export default function Page() {
 
       const data = await response.json();
       setEmployeeIdItems(data.employees);
-      console.log(data.employees)
+      console.log(data.employees);
     } catch (error) {
       console.error(error);
       toast({
@@ -61,16 +59,34 @@ export default function Page() {
   useEffect(() => {
     fetchEmployeeIdItems();
   }, []);
- 
+
   return (
-    
-    <div className="h-full flex-1 flex-col space-y-2 p-8 md:flex">
+    <div className="h-full flex-1 flex-col space-y-5 p-8 md:flex">
       <div className="flex items-center justify-between">
         <p className="text-muted-foreground">
-          Here&apos;s a list of your exmployees!
+          Here&apos;s a list of your employees!
         </p>
+        <AddEmployee refreshData={fetchEmployeeIdItems} />
       </div>
-      <DataTable data={employeeIdItems} columns={columns} loading={loading} />
+      {/* Pass refreshData separately */}
+      <DataTable
+        data={employeeIdItems}
+        columns={[
+          ...columns,
+          {
+            id: "actions",
+            header: "Actions",
+            cell: ({ row }) => (
+              <DataTableRowActions
+                row={row}
+                refreshData={fetchEmployeeIdItems}
+                
+              />
+            ),
+          },
+        ]}
+        loading={loading}
+      />
     </div>
   );
 }

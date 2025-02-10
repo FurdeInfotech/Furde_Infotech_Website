@@ -33,7 +33,7 @@ export const columns: ColumnDef<Expense>[] = [
   //   enableSorting: false,
   //   enableHiding: false,
   // },
- 
+
   {
     accessorKey: "empimage",
     header: "Profile",
@@ -121,7 +121,7 @@ export const columns: ColumnDef<Expense>[] = [
       <DataTableColumnHeader column={column} title="Emergency No." />
     ),
     cell: ({ row }) => {
-     row.getValue("empemergencymobile");
+      row.getValue("empemergencymobile");
       return (
         <div className="flex w-[100px] items-center">
           <span className="capitalize">
@@ -136,12 +136,29 @@ export const columns: ColumnDef<Expense>[] = [
     },
   },
   {
+    accessorKey: "empaddress",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Address" />
+    ),
+    cell: ({ row }) => {
+      row.getValue("empaddress");
+      return (
+        <div className="flex w-[150px] items-center">
+          <span className="capitalize"> {row.getValue("empaddress")}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
     accessorKey: "empbloodgroup",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Blood Group" />
     ),
     cell: ({ row }) => {
-     row.getValue("type");
+      row.getValue("type");
       return (
         <div className="flex w-[50px] items-center">
           <span className={cn("capitalize")}>
@@ -156,8 +173,5 @@ export const columns: ColumnDef<Expense>[] = [
     },
   },
 
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  
 ];

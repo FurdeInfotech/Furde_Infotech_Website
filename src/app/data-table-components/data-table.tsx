@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
+    []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -88,7 +88,7 @@ export function DataTable<TData, TValue>({
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
                   </TableHead>
                 ))}
@@ -96,15 +96,28 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-          {loading ? (
+            {loading ? (
               // Skeleton loader when data is loading
               Array.from({ length: 10 }).map((_, rowIndex) => (
                 <TableRow key={rowIndex}>
                   {columns.map((_, colIndex) => (
                     <TableCell key={colIndex}>
-                      <Skeleton
-                        className={` ${colIndex === 0 ? "rounded-full h-9 w-9 ml-2" : "h-6 w-full"}`}
-                      />
+                      {colIndex === columns.length - 1 ? (
+                        // Last column with 3 skeletons in a flex row
+                        <div className="flex items-center space-x-2">
+                          <Skeleton className="h-6 w-6" />
+                          <Skeleton className="h-6 w-6" />
+                          <Skeleton className="h-6 w-6" />
+                        </div>
+                      ) : (
+                        <Skeleton
+                          className={`${
+                            colIndex === 0
+                              ? "rounded-full h-8 w-8 ml-2"
+                              : "h-6 w-full"
+                          }`}
+                        />
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -119,7 +132,7 @@ export function DataTable<TData, TValue>({
                     <TableCell className="px-4 py-2" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}

@@ -11,10 +11,10 @@ export const employeesIDSchema = z.object({
     .string()
     .min(2, { message: "Employee Name must be at least 2 characters." }),
   empmobile: z
-    .number()
+    .string()
     .min(10, { message: "Employee Mobile No. must be at least 10 digits." }),
   empemergencymobile: z
-    .number()
+    .string()
     .min(10, {
       message: "Employee Emergency Mobile No. must be at least 10 digits.",
     }),

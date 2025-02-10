@@ -7,7 +7,7 @@ import cloudinary from "@/lib/cloudinary";
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { empid: string } }
 ) {
   try {
     await dbConnect();
@@ -22,16 +22,10 @@ export async function DELETE(
       );
     }
 
-    const { id } = params;
+    const { empid } = params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return new Response(
-        JSON.stringify({ success: false, message: "Invalid Employee ID" }),
-        { status: 400 }
-      );
-    }
 
-    const employee = await EmployeesIDModel.findById(id);
+    const employee = await EmployeesIDModel.findOne({empid});
 
     if (!employee) {
       return new Response(

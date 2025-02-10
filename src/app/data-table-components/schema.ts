@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // We're keeping a simple non-relational schema here.
 // IRL, you will have a schema for your data models.
-export const expenseSchema = z.object({
+export const EmployeeID = z.object({
     empid: z
     .string()
     .min(2, { message: "Employee ID must be at least 2 characters." }),
@@ -20,7 +20,9 @@ export const expenseSchema = z.object({
   empbloodgroup: z.enum(["A+", "A-", "B-", "O+", "O-", "AB+", "AB-", "B+"], {
     message: "Please select a Blood Group",
   }),
-  empimage: z.string()
+  empimage: z.string(),
+  empaddress: z.string(),
+  emprole: z.string(),
 });
 
-export type Expense = z.infer<typeof expenseSchema>;
+export type Expense = z.infer<typeof EmployeeID>;
