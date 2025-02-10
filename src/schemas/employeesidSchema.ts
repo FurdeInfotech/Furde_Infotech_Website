@@ -29,3 +29,7 @@ export const employeesIDSchema = z.object({
   .string()
   .min(2, { message: "Employee Name must be at least 2 characters." }),
 });
+
+export const updateEmployeeSchema = employeesIDSchema.extend({
+  empimage: z.instanceof(File).optional(), // ✅ Image is optional when updating
+});

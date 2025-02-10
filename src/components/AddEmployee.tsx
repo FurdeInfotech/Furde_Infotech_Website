@@ -79,7 +79,7 @@ function AddEmployee({ refreshData }: Props) {
 
       toast({
         title: "Success",
-        description: "Photo added to the gallery successfully!",
+        description: "Employee added successfully!",
       });
 
       // Close the dialog
@@ -87,10 +87,10 @@ function AddEmployee({ refreshData }: Props) {
       form.reset(); // Reset the form fields
       refreshData(); // Refresh the data
     } catch (error) {
-      console.error("Failed to add photo:", error);
+      console.error("Failed to add Employee:", error);
       toast({
         title: "Error",
-        description: `Failed to add photo: ${error}`,
+        description: `Failed to add Employee: ${error}`,
         variant: "destructive",
       });
     } finally {
@@ -101,7 +101,7 @@ function AddEmployee({ refreshData }: Props) {
     <>
       <Button
         size="sm"
-        className="bg-blue-500 hover:bg-blue-600 duration-200"
+        className="bg-blue-500 hover:bg-blue-600 duration-200 "
         onClick={() => setDialogOpen(true)}
       >
         Add Employee
@@ -116,122 +116,135 @@ function AddEmployee({ refreshData }: Props) {
             <DialogTitle>Add Employee</DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-3">
               {/* Employee ID */}
+              <div className=" flex gap-5 w-full items-center flex-row">
+                <FormField
+                  control={form.control}
+                  name="empid"
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <FormLabel>Employee ID*</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter ID" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="empid"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Employee ID*</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter ID" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* Name */}
+                {/* Name */}
 
-              <FormField
-                control={form.control}
-                name="empname"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Employee Name*</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="empname"
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <FormLabel>Employee Name*</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className=" flex gap-5 w-full items-center flex-row">
+                <FormField
+                  control={form.control}
+                  name="emprole"
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <FormLabel>Employee Role*</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter Role" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="empbloodgroup"
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <FormLabel>Blood Group*</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value || ""}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Blood Group" />
+                        </SelectTrigger>
 
-              <FormField
-                control={form.control}
-                name="emprole"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Employee Role*</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Role" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                        <SelectContent>
+                          {bloodGroup.map((group) => (
+                            <SelectItem key={group} value={group}>
+                              {group}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-              <FormField
-                control={form.control}
-                name="empimage"
-                render={({ field }) => (
-                  <FormItem className=" cursor-pointer">
-                    <FormLabel>Image*</FormLabel>
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0]; // Get the selected file
-                        field.onChange(file); // Update the field with the selected file
-                      }}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className=" flex gap-5 w-full items-center flex-row">
+                <FormField
+                  control={form.control}
+                  name="empmobile"
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <FormLabel>Mobile No.*</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter Mobile"
+                          {...field}
+                          maxLength={10}
+                          type="text" // Keep type="text" for maxLength support
+                          onInput={(e) => {
+                            const input = e.target as HTMLInputElement;
+                            input.value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
+                            if (input.value.length > 10) {
+                              input.value = input.value.slice(0, 10); // Enforce 10 digits max
+                            }
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="empmobile"
-                render={({ field }) => (
-                  <FormItem className=" md:col-span-1 col-span-2">
-                    <FormLabel>Phone*</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter Mobile No."
-                        {...field}
-                        maxLength={10}
-                        type="text" // Keep type="text" for maxLength support
-                        onInput={(e) => {
-                          const input = e.target as HTMLInputElement;
-                          input.value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
-                          if (input.value.length > 10) {
-                            input.value = input.value.slice(0, 10); // Enforce 10 digits max
-                          }
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="empemergencymobile"
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <FormLabel>Emergency Mobile No.*</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter Emergency Mobile"
+                          {...field}
+                          maxLength={10}
+                          type="text" // Keep type="text" for maxLength support
+                          onInput={(e) => {
+                            const input = e.target as HTMLInputElement;
+                            input.value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
+                            if (input.value.length > 10) {
+                              input.value = input.value.slice(0, 10); // Enforce 10 digits max
+                            }
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-              <FormField
-                control={form.control}
-                name="empemergencymobile"
-                render={({ field }) => (
-                  <FormItem className=" md:col-span-1 col-span-2">
-                    <FormLabel>Phone*</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter Emergency Mobile No."
-                        {...field}
-                        maxLength={10}
-                        type="text" // Keep type="text" for maxLength support
-                        onInput={(e) => {
-                          const input = e.target as HTMLInputElement;
-                          input.value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
-                          if (input.value.length > 10) {
-                            input.value = input.value.slice(0, 10); // Enforce 10 digits max
-                          }
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="empaddress"
@@ -253,26 +266,18 @@ function AddEmployee({ refreshData }: Props) {
 
               <FormField
                 control={form.control}
-                name="empbloodgroup"
+                name="empimage"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Blood Group*</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value || ""}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Blood Group" />
-                      </SelectTrigger>
-
-                      <SelectContent>
-                        {bloodGroup.map((group) => (
-                          <SelectItem key={group} value={group}>
-                            {group}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <FormItem className=" cursor-pointer">
+                    <FormLabel>Image*</FormLabel>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]; // Get the selected file
+                        field.onChange(file); // Update the field with the selected file
+                      }}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

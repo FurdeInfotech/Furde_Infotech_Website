@@ -12,16 +12,16 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import AddEmployee from "@/components/AddEmployee";
+
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
-  refreshData: () => void; // Accept refresh function as a prop
+
 }
 
 export function DataTableViewOptions<TData>({
   table,
-  refreshData,
+
 }: DataTableViewOptionsProps<TData>) {
   return (
     <>
