@@ -46,7 +46,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -278,7 +278,7 @@ function Page() {
         className="absolute right-8 sm:top-14 top-[51px] bg-blue-500 hover:bg-blue-600 duration-200"
         onClick={() => setDialogOpen(true)}
       >
-        Add Photo
+       <Plus/> Add Photo
       </Button>
 
       <Dialog

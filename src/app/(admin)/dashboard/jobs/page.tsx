@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Edit, Loader2, Trash2 } from "lucide-react";
+import { Edit, Loader2, Plus, Trash2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdAccessTimeFilled } from "react-icons/md";
@@ -306,7 +306,7 @@ function Page() {
         className="absolute right-8 sm:top-8 top-[51px] bg-blue-500 hover:bg-blue-600 duration-200"
         onClick={handleAdd}
       >
-        Add Job
+       <Plus/> Add Job
       </Button>
       <Dialog
         open={dialogOpen}

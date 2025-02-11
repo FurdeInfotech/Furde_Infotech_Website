@@ -24,7 +24,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -125,7 +125,7 @@ function AddEmployee({ refreshData }: Props) {
         className="bg-blue-500 hover:bg-blue-600 duration-200 "
         onClick={() => setDialogOpen(true)}
       >
-        Add Employee
+       <Plus/> Add Employee
       </Button>
 
       <Dialog
@@ -320,8 +320,8 @@ function AddEmployee({ refreshData }: Props) {
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className=" mr-2 h-4 w-4 animate-spin" />
-                      Please wait
+                      <Loader2 className="  h-4 w-4 animate-spin" />
+                     Adding
                     </>
                   ) : (
                     "Add"

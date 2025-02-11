@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Row } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { Eye, Loader2, Pencil, Trash2 } from "lucide-react";
+import { Download, Eye, Loader2, Pencil, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -56,6 +56,7 @@ interface Employee {
   empemergencymobile: number;
   empaddress: string;
   empimage: string;
+  empqrcode: string;
 }
 
 interface DataTableRowActionsProps<TData> {
@@ -104,7 +105,7 @@ export function DataTableRowActions<TData>({
           | "AB-"
           | "B+") || undefined,
       empaddress: employee?.empaddress || "",
-      empimage: undefined , // File inputs do not support default values
+      empimage: undefined, // File inputs do not support default values
     },
     mode: "onChange",
   });
@@ -113,23 +114,23 @@ export function DataTableRowActions<TData>({
     setLoading(true);
     try {
       const formData = new FormData();
-      
+
       // Append all fields except image
       Object.entries(data).forEach(([key, value]) => {
         if (key !== "empimage" && value) {
           formData.append(key, value as string);
         }
       });
-  
+
       // Append image only if a new file is selected
       if (data.empimage instanceof File) {
         formData.append("empimage", data.empimage);
       }
-  
+
       await axios.put(`/api/update-employeesid/${employee.empid}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-  
+
       toast({ title: "Success", description: "Employee updated successfully" });
       setDialogType(null);
       refreshData(); // Refresh data after update
@@ -143,7 +144,7 @@ export function DataTableRowActions<TData>({
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="flex gap-3">
       {/* View Button */}
@@ -167,7 +168,7 @@ export function DataTableRowActions<TData>({
       <Button
         variant="ghost"
         size="icon"
-        className="text-red-500 hover:bg-red-100"
+        className="text-red-500 hover:text-red-500"
         onClick={() => setShowDeleteConfirm(true)}
       >
         <Trash2 size={18} />
@@ -187,19 +188,23 @@ export function DataTableRowActions<TData>({
               <div className="flex flex-col">
                 <Image
                   src={employee.empimage}
-                  alt="Employee Image"
+                  alt={employee.empname}
                   width={200}
                   height={200}
-                  className=""
+                  priority
+                  placeholder="blur"
+                  blurDataURL={employee.empimage}
                 />
               </div>
               <div className="flex flex-col">
                 <Image
-                  src="/fitmain.png"
-                  alt="Employee Image"
+                  src={employee.empqrcode || "/fitmain.png"}
+                  alt="Employee QR Code"
                   width={200}
                   height={200}
-                  className=""
+                  priority
+                  placeholder="blur"
+                  blurDataURL={employee.empqrcode || "/fitmain.png"}
                 />
               </div>
             </div>
@@ -252,6 +257,55 @@ export function DataTableRowActions<TData>({
                 Close
               </Button>
             </DialogClose>
+            <Button
+              type="button"
+              size="sm"
+              className="bg-blue-500 duration-200 hover:bg-blue-600"
+              disabled={loading}
+              onClick={async () => {
+                setLoading(true);
+                try {
+                  const response = await fetch(employee.empqrcode);
+                  const blob = await response.blob();
+                  const url = URL.createObjectURL(blob);
+
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `${employee.empname}_qrcode.png`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+
+                  URL.revokeObjectURL(url);
+                  toast({
+                    title: "Success",
+                    description: "QR code downloaded successfully",
+                    variant: "default",
+                  });
+                } catch (error) {
+                  console.error("Error downloading QR code:", error);
+                  toast({
+                    title: "Error",
+                    description: "Failed to download QR code",
+                    variant: "destructive",
+                  });
+                } finally {
+                  setLoading(false);
+                }
+              }}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Downloading...
+                </>
+              ) : (
+                <>
+                  <Download />
+                  Download QR Code
+                </>
+              )}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
