@@ -1,9 +1,12 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
-
 import cloudinary from "@/lib/cloudinary";
 import EmployeesIDModel from "@/models/EmployeesID";
+import { createCanvas, loadImage } from "canvas"; // For adding logo & customizing QR
+import QRCode from "qrcode";
+import fs from "fs";
+import path from "path";
 
 export async function POST(request: Request) {
   try {
@@ -95,6 +98,62 @@ export async function POST(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { secure_url: secureUrl } = uploadResult as any;
 
+    // Extract base URL dynamically from request
+    const baseUrl = new URL(request.url).origin;
+    const profileUrl = `${baseUrl}/employees/${empid}`;
+
+    // Generate QR Code with Styling
+    const qrSize = 300; // Set QR Code size (adjustable)
+    const canvas = createCanvas(qrSize, qrSize);
+    const ctx = canvas.getContext("2d");
+
+    await QRCode.toCanvas(canvas, profileUrl, {
+      width: qrSize,
+      margin: 2,
+      color: {
+        dark: "#000000", // QR Code color
+        light: "#ffffff", // Background color
+      },
+    });
+
+    // Add a Logo in the center
+    const logo = await loadImage(
+      "https://res.cloudinary.com/davi6vff3/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1739253905/FIT-JPEG_a9xfvg.jpg"
+    ); // Replace with your logo URL
+    const logoSize = qrSize * 0.25; // Logo size relative to QR code
+    const centerX = (qrSize - logoSize) / 2;
+    const centerY = (qrSize - logoSize) / 2;
+
+    ctx.drawImage(logo, centerX, centerY, logoSize, logoSize);
+
+    // Convert canvas to Buffer
+    const qrCodeBuffer = canvas.toBuffer("image/png");
+
+    // Upload QR Code to Cloudinary
+    const qrCodeUploadResult = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {
+            folder: "employeesID/qrcodes",
+            public_id: `${employeeName}_qrcode`,
+            overwrite: true,
+            format: "png",
+          },
+          (error, result) => {
+            if (error) {
+              return reject(
+                new Error("Failed to upload QR code to Cloudinary")
+              );
+            }
+            resolve(result);
+          }
+        )
+        .end(qrCodeBuffer);
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { secure_url: qrCodeUrl } = qrCodeUploadResult as any;
+
     const newEmployeeID = new EmployeesIDModel({
       empid,
       empname,
@@ -104,16 +163,23 @@ export async function POST(request: Request) {
       empbloodgroup,
       empimage: secureUrl,
       empaddress,
+      empqrcode: qrCodeUrl,
     });
 
     await newEmployeeID.save();
 
+    // Save QR Code Locally (Optional)
+    const downloadPath = path.join(__dirname, `${employeeName}_qrcode.png`);
+    fs.writeFileSync(downloadPath, qrCodeBuffer);
+
+    // Return success response with employee data & QR code URL
     return new Response(
       JSON.stringify({
         success: true,
         data: newEmployeeID,
+        qrCodeUrl, // Send QR Code URL so frontend can trigger download
       }),
-      { status: 201 }
+      { status: 201, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     return new Response(

@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
 import EmployeesIDModel from "@/models/EmployeesID";
-import mongoose from "mongoose";
 import cloudinary from "@/lib/cloudinary";
 
 export async function DELETE(
@@ -34,31 +33,37 @@ export async function DELETE(
       );
     }
 
-    // ✅ Extract Cloudinary public_id from image URL
-    if (employee.empimage) {
-      try {
-        const imageUrl = employee.empimage;
-        const regex = /\/upload\/v\d+\/(.+)\.\w+$/; // Extracts public_id
-        const match = imageUrl.match(regex);
+     // ✅ Function to extract public_id from Cloudinary URL
+     const extractPublicId = (imageUrl: string | undefined): string | null => {
+      if (!imageUrl) return null;
+      const regex = /\/upload\/v\d+\/(.+)\.\w+$/; // Extracts public_id
+      const match = imageUrl.match(regex);
+      return match && match[1] ? match[1] : null;
+    };
 
-        if (match && match[1]) {
-          const publicId = match[1]; // Extracted "employeesID/shraddha_pawar"
+    // ✅ Extract public_id for empimage & qrCode
+    const empImagePublicId = extractPublicId(employee.empimage);
+    const qrCodePublicId = extractPublicId(employee.empqrcode);
 
-
-
-          // ✅ Delete the image from Cloudinary
+    // ✅ Delete images from Cloudinary
+    const deleteFromCloudinary = async (publicId: string | null) => {
+      if (publicId) {
+        try {
           const cloudinaryResponse = await cloudinary.uploader.destroy(publicId);
-
           if (cloudinaryResponse.result !== "ok") {
             console.error("Cloudinary deletion error:", cloudinaryResponse);
           }
-        } else {
-          console.error("Failed to extract public_id from:", imageUrl);
+        } catch (err) {
+          console.error("Error deleting from Cloudinary:", err);
         }
-      } catch (err) {
-        console.error("Error extracting Cloudinary public_id:", err);
       }
-    }
+    };
+
+    await Promise.all([
+      deleteFromCloudinary(empImagePublicId),
+      deleteFromCloudinary(qrCodePublicId),
+    ]);
+
 
     // ✅ Delete the employee from the database
     await employee.deleteOne();

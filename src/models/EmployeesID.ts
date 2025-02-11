@@ -8,7 +8,8 @@ export interface EmployeesID extends Document {
   empemergencymobile: number;
   empbloodgroup: string;
   empimage: string;
-  empaddress: string
+  empaddress: string;
+  empqrcode: string; 
 }
 
 const EmployeesIDSchema: Schema<EmployeesID> = new mongoose.Schema(
@@ -45,7 +46,11 @@ const EmployeesIDSchema: Schema<EmployeesID> = new mongoose.Schema(
     },
     empaddress: {
       type: String,
-      required: [true, "Employee Emergency Mobile No. is required"],
+      required: [true, "Employee Address is required"],
+    },
+    empqrcode: {
+      type: String,
+      required: [true, "Employee QRCode Mobile No. is required"],
     },
   },
   {

@@ -135,8 +135,8 @@ export function DataTableRowActions<TData>({
       refreshData(); // Refresh data after update
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Error updating employee",
+        title: "Error Updating Employee",
+        description: `Error: ${error} `,
         variant: "destructive",
       });
     } finally {
@@ -500,8 +500,8 @@ export function DataTableRowActions<TData>({
                   refreshData(); // Refresh table data
                 } catch (error) {
                   toast({
-                    title: "Error",
-                    description: "Error deleting employee",
+                    title: "Error Deleting Employee",
+                    description: `Error: ${error}`,
                     variant: "destructive",
                   });
                 } finally {

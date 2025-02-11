@@ -73,19 +73,40 @@ function AddEmployee({ refreshData }: Props) {
         formData.append("empimage", data.empimage);
       }
 
-      await axios.post("/api/add-employeesid", formData, {
+      const response = await axios.post("/api/add-employeesid", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      toast({
-        title: "Success",
-        description: "Employee added successfully!",
-      });
-
-      // Close the dialog
-      setDialogOpen(false);
-      form.reset(); // Reset the form fields
-      refreshData(); // Refresh the data
+      if (response.data.success) {
+        toast({
+          title: "Success",
+          description: "Employee added successfully!",
+        });
+  
+        // **Download QR Code instead of opening the link**
+        const qrCodeUrl = response.data.qrCodeUrl; // Cloudinary URL
+  
+        // Fetch the image as a Blob
+        const qrResponse = await fetch(qrCodeUrl);
+        const blob = await qrResponse.blob();
+        const blobUrl = URL.createObjectURL(blob);
+  
+        // Create a temporary <a> tag to trigger the download
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = `${data.empname}_qrcode.png`; // Force download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+  
+        // Revoke the Blob URL to free up memory
+        URL.revokeObjectURL(blobUrl);
+  
+        // Close the dialog
+        setDialogOpen(false);
+        form.reset(); // Reset the form fields
+        refreshData(); // Refresh the data
+      }
     } catch (error) {
       console.error("Failed to add Employee:", error);
       toast({

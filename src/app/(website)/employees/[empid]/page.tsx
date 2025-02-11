@@ -126,6 +126,7 @@ function Page({ params }: { params: { empid: string } }) {
                 className="object-contain rounded-full"
                 alt="employee"
                 priority
+                placeholder="blur"
               />
             </motion.div>
           )}
