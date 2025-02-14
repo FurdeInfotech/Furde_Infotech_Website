@@ -50,7 +50,7 @@ const EmployeesIDSchema: Schema<EmployeesID> = new mongoose.Schema(
     },
     empqrcode: {
       type: String,
-      required: [true, "Employee QRCode Mobile No. is required"],
+      required: [true, "Employee QRCode is required"],
     },
   },
   {

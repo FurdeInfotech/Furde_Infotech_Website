@@ -168,10 +168,7 @@ export async function POST(request: Request) {
 
     await newEmployeeID.save();
 
-    // Save QR Code Locally (Optional)
-    const downloadPath = path.join(__dirname, `${employeeName}_qrcode.png`);
-    fs.writeFileSync(downloadPath, qrCodeBuffer);
-
+  
     // Return success response with employee data & QR code URL
     return new Response(
       JSON.stringify({
@@ -182,6 +179,7 @@ export async function POST(request: Request) {
       { status: 201, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
+    console.log(error)
     return new Response(
       JSON.stringify({
         success: false,
