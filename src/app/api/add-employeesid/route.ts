@@ -5,8 +5,7 @@ import cloudinary from "@/lib/cloudinary";
 import EmployeesIDModel from "@/models/EmployeesID";
 import { createCanvas, loadImage } from "canvas"; // For adding logo & customizing QR
 import QRCode from "qrcode";
-import fs from "fs";
-import path from "path";
+
 
 export async function POST(request: Request) {
   try {
