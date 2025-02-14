@@ -146,7 +146,7 @@ export function DataTableRowActions<TData>({
   };
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-1">
       {/* View Button */}
       <Button
         variant="ghost"

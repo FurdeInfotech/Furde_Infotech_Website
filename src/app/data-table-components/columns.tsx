@@ -92,7 +92,7 @@ export const columns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium capitalize">
+          <span className="max-w-[500px]  font-medium capitalize">
             {row.getValue("emprole")}
           </span>
         </div>
@@ -143,7 +143,7 @@ export const columns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       row.getValue("empaddress");
       return (
-        <div className="flex w-[150px] items-center">
+        <div className="flex w-[100px] truncate items-center">
           <span className="capitalize"> {row.getValue("empaddress")}</span>
         </div>
       );
@@ -160,7 +160,7 @@ export const columns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       row.getValue("type");
       return (
-        <div className="flex w-[50px] items-center">
+        <div className="flex w-[50px] items-center justify-center">
           <span className={cn("capitalize")}>
             {" "}
             {row.getValue("empbloodgroup")}
