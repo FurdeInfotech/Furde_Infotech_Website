@@ -79,7 +79,7 @@ export default function Navbar() {
     };
   }, [sidebarOpen]);
 
-  if (pathname.startsWith("/dashboard") || pathname.startsWith("/employees")) {
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/employees") || pathname.startsWith("/furde-constructions")) {
     return <div></div>;
   }
 
