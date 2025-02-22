@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dialog } from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
 import gulmoharpark from "@/assets/Furde_Construction/GULMOHAR PARK LAYOUT_page-0001.jpg";
 import amarparkpark from "@/assets/Furde_Construction/Amar Park Layout_page-0001.jpg";
