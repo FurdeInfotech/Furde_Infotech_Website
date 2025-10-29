@@ -18,8 +18,6 @@ export default function CertificateTemplate({
   recipientName,
   certificateType,
   dateAwarded,
-  organizationName,
-  organizationLogo,
   startDate,
   endDate,
 }: CertificateTemplateProps) {

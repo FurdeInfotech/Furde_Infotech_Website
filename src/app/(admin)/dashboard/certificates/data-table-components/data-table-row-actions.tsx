@@ -22,6 +22,7 @@ import Link from "next/link";
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
   refreshData: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onEdit: (certificate: any) => void;
 }
 

@@ -70,12 +70,13 @@ export default function CertificatePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8 pt-[30%] sm:pt-[12%]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-6">
-              <Skeleton className="h-12 w-3/4" />
+              <Skeleton className="h-28 w-full" />
               <Skeleton className="h-64 w-full" />
+               <Skeleton className="h-36 w-3/4" />
             </div>
             <div>
               <Skeleton className="h-96 w-full" />
@@ -88,7 +89,7 @@ export default function CertificatePage() {
 
   if (error || !certificate) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 pt-[30%] sm:pt-[12%]">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-slate-900 mb-4">Certificate Not Found</h1>
           <p className="text-slate-600">{error || "The certificate you're looking for doesn't exist."}</p>
@@ -230,7 +231,7 @@ export default function CertificatePage() {
               <div className="mt-6 pt-6 border-t border-blue-500">
                 <p className="text-sm text-blue-100 leading-relaxed">
                   This certificate is <span className="font-bold text-white">100% original</span> and has been
-                  officially issued by our organization. It serves as authentic proof of the recipient's
+                  officially issued by our organization. It serves as authentic proof of the recipient&apos;s
                   accomplishment and can be verified through our official records.
                 </p>
               </div>
