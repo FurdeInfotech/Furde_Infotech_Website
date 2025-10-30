@@ -149,6 +149,9 @@ function Page() {
     form.setValue("certificateType", certificate.certificateType as any);
     form.setValue("dateAwarded", certificate.dateAwarded);
     
+    // Set employee search term to show the current employee name
+    setEmployeeSearchTerm(certificate.employeeName);
+    
     // Set dates
     setDateAwarded(new Date(certificate.dateAwarded));
     

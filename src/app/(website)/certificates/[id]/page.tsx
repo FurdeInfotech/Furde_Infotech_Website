@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import CertificateTemplate from "@/components/certificate-template";
-import { Award, Calendar, CheckCircle2, ShieldCheck } from "lucide-react";
+import { Award, Calendar, CheckCircle2, RefreshCcw, ShieldCheck } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 // Add print styles
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
+if (typeof document !== "undefined") {
+  const style = document.createElement("style");
   style.textContent = `
     @media print {
       body * {
@@ -30,7 +31,12 @@ if (typeof document !== 'undefined') {
 type Certificate = {
   _id: string;
   employeeName: string;
-  certificateType: "Internship" | "Appreciation" | "Game Changer" | "Excellence" | "Achievement";
+  certificateType:
+    | "Internship"
+    | "Appreciation"
+    | "Game Changer"
+    | "Excellence"
+    | "Achievement";
   startDate?: string;
   endDate?: string;
   dateAwarded: string;
@@ -43,26 +49,27 @@ export default function CertificatePage() {
   const [certificate, setCertificate] = useState<Certificate | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const fetchCertificate = async () => {
+    try {
+      const response = await fetch(`/api/get-certificate/${id}`);
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to fetch certificate");
+      }
+
+      setCertificate(data.certificate);
+    } catch (err) {
+      console.error("Error fetching certificate:", err);
+      setError(
+        err instanceof Error ? err.message : "Failed to load certificate"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCertificate = async () => {
-      try {
-        const response = await fetch(`/api/get-certificate/${id}`);
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(data.message || "Failed to fetch certificate");
-        }
-
-        setCertificate(data.certificate);
-      } catch (err) {
-        console.error("Error fetching certificate:", err);
-        setError(err instanceof Error ? err.message : "Failed to load certificate");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (id) {
       fetchCertificate();
     }
@@ -76,7 +83,7 @@ export default function CertificatePage() {
             <div className="space-y-6">
               <Skeleton className="h-28 w-full" />
               <Skeleton className="h-64 w-full" />
-               <Skeleton className="h-36 w-3/4" />
+              <Skeleton className="h-36 w-3/4" />
             </div>
             <div>
               <Skeleton className="h-96 w-full" />
@@ -91,8 +98,13 @@ export default function CertificatePage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 pt-[30%] sm:pt-[12%]">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">Certificate Not Found</h1>
-          <p className="text-slate-600">{error || "The certificate you're looking for doesn't exist."}</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-4">
+            Certificate Not Found
+          </h1>
+          <p className="text-slate-600">
+            {error || "The certificate you're looking for doesn't exist."}
+          </p>
+          <Button onClick={() => fetchCertificate()}>Try Again <RefreshCcw/></Button>
         </div>
       </div>
     );
@@ -152,7 +164,9 @@ export default function CertificatePage() {
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-200">
-                  <p className="text-sm text-slate-600 mb-1">Certificate Type</p>
+                  <p className="text-sm text-slate-600 mb-1">
+                    Certificate Type
+                  </p>
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                     {certificate.certificateType}
                   </span>
@@ -167,45 +181,66 @@ export default function CertificatePage() {
                 Certificate Details
               </h2>
               <div className="space-y-4">
-                {certificate.certificateType === "Internship" && certificate.startDate && certificate.endDate && (
-                  <>
-                    <div>
-                      <p className="text-sm text-slate-600 mb-1">Program Duration</p>
-                      <p className="text-base font-semibold text-slate-900">
-                        {new Date(certificate.startDate).toLocaleDateString("en-US", {
-                          month: "long",
-                          day: "numeric",
-                          year: "numeric",
-                        })}{" "}
-                        -{" "}
-                        {new Date(certificate.endDate).toLocaleDateString("en-US", {
-                          month: "long",
-                          day: "numeric",
-                          year: "numeric",
-                        })}
-                      </p>
-                    </div>
-                    <div className="border-t border-slate-200 pt-4">
-                      <p className="text-sm text-slate-600 mb-1">Total Duration</p>
-                      <p className="text-base font-semibold text-slate-900">
-                        {Math.ceil(
-                          (new Date(certificate.endDate).getTime() -
-                            new Date(certificate.startDate).getTime()) /
-                            (1000 * 60 * 60 * 24)
-                        )}{" "}
-                        days
-                      </p>
-                    </div>
-                  </>
-                )}
-                <div className={certificate.certificateType === "Internship" ? "border-t border-slate-200 pt-4" : ""}>
+                {certificate.certificateType === "Internship" &&
+                  certificate.startDate &&
+                  certificate.endDate && (
+                    <>
+                      <div>
+                        <p className="text-sm text-slate-600 mb-1">
+                          Program Duration
+                        </p>
+                        <p className="text-base font-semibold text-slate-900">
+                          {new Date(certificate.startDate).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )}{" "}
+                          -{" "}
+                          {new Date(certificate.endDate).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </p>
+                      </div>
+                      <div className="border-t border-slate-200 pt-4">
+                        <p className="text-sm text-slate-600 mb-1">
+                          Total Duration
+                        </p>
+                        <p className="text-base font-semibold text-slate-900">
+                          {Math.ceil(
+                            (new Date(certificate.endDate).getTime() -
+                              new Date(certificate.startDate).getTime()) /
+                              (1000 * 60 * 60 * 24)
+                          )}{" "}
+                          days
+                        </p>
+                      </div>
+                    </>
+                  )}
+                <div
+                  className={
+                    certificate.certificateType === "Internship"
+                      ? "border-t border-slate-200 pt-4"
+                      : ""
+                  }
+                >
                   <p className="text-sm text-slate-600 mb-1">Date Awarded</p>
                   <p className="text-base font-semibold text-slate-900">
-                    {new Date(certificate.dateAwarded).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                    {new Date(certificate.dateAwarded).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      }
+                    )}
                   </p>
                 </div>
                 <div className="border-t border-slate-200 pt-4">
@@ -222,7 +257,9 @@ export default function CertificatePage() {
               <div className="flex items-start gap-3 mb-4">
                 <ShieldCheck className="w-6 h-6 flex-shrink-0 mt-1" />
                 <div>
-                  <h2 className="text-xl font-bold mb-2">Certificate Authenticity</h2>
+                  <h2 className="text-xl font-bold mb-2">
+                    Certificate Authenticity
+                  </h2>
                   <p className="text-blue-100 text-sm leading-relaxed">
                     {getCertificateTypeDescription()}
                   </p>
@@ -230,9 +267,11 @@ export default function CertificatePage() {
               </div>
               <div className="mt-6 pt-6 border-t border-blue-500">
                 <p className="text-sm text-blue-100 leading-relaxed">
-                  This certificate is <span className="font-bold text-white">100% original</span> and has been
-                  officially issued by our organization. It serves as authentic proof of the recipient&apos;s
-                  accomplishment and can be verified through our official records.
+                  This certificate is{" "}
+                  <span className="font-bold text-white">100% original</span>{" "}
+                  and has been officially issued by our organization. It serves
+                  as authentic proof of the recipient&apos;s accomplishment and
+                  can be verified through our official records.
                 </p>
               </div>
             </div>
