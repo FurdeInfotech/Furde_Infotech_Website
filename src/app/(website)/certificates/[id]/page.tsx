@@ -36,7 +36,19 @@ type Certificate = {
     | "Appreciation"
     | "Game Changer"
     | "Excellence"
-    | "Achievement";
+    | "Achievement"
+    | "Excellence in Performance"
+    | "Dedication"
+    | "Team Work"
+    | "Employee of the Month"
+    | "Employee of the Year"
+    | "Outstanding Performance"
+    | "Leadership Excellence"
+    | "Strategic Achievement"
+    | "Excellence in Management"
+    | "Inspirational Leadership"
+    | "Team Excellence"
+    | "Innovation";
   startDate?: string;
   endDate?: string;
   dateAwarded: string;
@@ -122,6 +134,30 @@ export default function CertificatePage() {
         return "This certificate celebrates exceptional performance, unwavering commitment to quality, and consistently exceeding expectations in all endeavors.";
       case "Achievement":
         return "This certificate commemorates remarkable accomplishments, significant milestones, and noteworthy success in professional pursuits.";
+      case "Excellence in Performance":
+        return "This certificate recognizes exceptional performance and consistently exceeding expectations in all professional endeavors.";
+      case "Dedication":
+        return "This certificate honors unwavering dedication, commitment to excellence, and consistent demonstration of loyalty to organizational goals.";
+      case "Team Work":
+        return "This certificate celebrates outstanding teamwork, collaborative spirit, and the ability to work effectively with others to achieve common goals.";
+      case "Employee of the Month":
+        return "This prestigious recognition acknowledges exceptional contribution and performance during the month, setting a benchmark for excellence.";
+      case "Employee of the Year":
+        return "This highest honor recognizes outstanding achievement, consistent excellence, and exceptional contribution throughout the entire year.";
+      case "Outstanding Performance":
+        return "This certificate acknowledges consistently delivering outstanding performance, exceptional results, and exceeding organizational expectations.";
+      case "Leadership Excellence":
+        return "This certificate recognizes exceptional leadership qualities, the ability to inspire others, and demonstrating excellence in guiding teams to success.";
+      case "Strategic Achievement":
+        return "This certificate honors strategic vision, innovative thinking, and achievement in driving organizational success through well-planned initiatives.";
+      case "Excellence in Management":
+        return "This certificate celebrates excellence in management practices, outstanding leadership capabilities, and effective team guidance.";
+      case "Inspirational Leadership":
+        return "This certificate recognizes inspirational leadership that motivates teams, empowers individuals, and creates a positive impact on organizational culture.";
+      case "Team Excellence":
+        return "This certificate honors the ability to build and lead high-performing teams, fostering collaboration and achieving exceptional collective results.";
+      case "Innovation":
+        return "This certificate celebrates innovative thinking, creative problem-solving, and implementing solutions that drive progress and organizational advancement.";
       default:
         return "This certificate recognizes outstanding performance and dedication.";
     }

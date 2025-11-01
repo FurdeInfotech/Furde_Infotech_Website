@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2, Plus, CalendarIcon, Check } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -37,7 +39,11 @@ import { DataTable } from "./data-table-components/data-table";
 import { columns } from "./data-table-components/columns";
 import { DataTableRowActions } from "./data-table-components/data-table-row-actions";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
@@ -62,14 +68,17 @@ function Page() {
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedCertificateType, setSelectedCertificateType] = useState<string>("");
+  const [selectedCertificateType, setSelectedCertificateType] =
+    useState<string>("");
   const [employeeSearchOpen, setEmployeeSearchOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [dateAwarded, setDateAwarded] = useState<Date>();
-  const [editingCertificate, setEditingCertificate] = useState<Certificate | null>(null);
+  const [editingCertificate, setEditingCertificate] =
+    useState<Certificate | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [employeeSearchTerm, setEmployeeSearchTerm] = useState("");
+  const [isManagementCertificate, setIsManagementCertificate] = useState(false);
 
   const { toast } = useToast();
 
@@ -142,26 +151,30 @@ function Page() {
     setEditingCertificate(certificate);
     setIsEditMode(true);
     setSelectedCertificateType(certificate.certificateType);
-    
+
     // Set form values
     form.setValue("employeeName", certificate.employeeName);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     form.setValue("certificateType", certificate.certificateType as any);
     form.setValue("dateAwarded", certificate.dateAwarded);
-    
+
     // Set employee search term to show the current employee name
     setEmployeeSearchTerm(certificate.employeeName);
-    
+
     // Set dates
     setDateAwarded(new Date(certificate.dateAwarded));
-    
-    if (certificate.certificateType === "Internship" && certificate.startDate && certificate.endDate) {
+
+    if (
+      certificate.certificateType === "Internship" &&
+      certificate.startDate &&
+      certificate.endDate
+    ) {
       form.setValue("startDate", certificate.startDate);
       form.setValue("endDate", certificate.endDate);
       setStartDate(new Date(certificate.startDate));
       setEndDate(new Date(certificate.endDate));
     }
-    
+
     setDialogOpen(true);
   };
 
@@ -179,14 +192,19 @@ function Page() {
 
       if (isEditMode && editingCertificate) {
         // Update existing certificate
-        await axios.put(`/api/update-certificate/${editingCertificate._id}`, submitData, {
-          headers: { "Content-Type": "application/json" },
-        });
+        await axios.put(
+          `/api/update-certificate/${editingCertificate._id}`,
+          submitData,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         toast({
           title: "Success",
           description: "Certificate updated successfully!",
         });
+        form.reset();
       } else {
         // Add new certificate
         await axios.post("/api/add-certificate", submitData, {
@@ -197,6 +215,7 @@ function Page() {
           title: "Success",
           description: "Certificate added successfully!",
         });
+        form.reset();
       }
 
       form.reset();
@@ -208,6 +227,7 @@ function Page() {
       setEmployeeSearchOpen(false);
       setIsEditMode(false);
       setEditingCertificate(null);
+      setIsManagementCertificate(false);
     } catch (error) {
       console.error("Failed to add certificate:", error);
       toast({
@@ -230,17 +250,17 @@ function Page() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (!target.closest('.employee-search-container')) {
+      if (!target.closest(".employee-search-container")) {
         setEmployeeSearchOpen(false);
       }
     };
 
     if (employeeSearchOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [employeeSearchOpen]);
 
@@ -292,23 +312,30 @@ function Page() {
               setEmployeeSearchTerm("");
               setIsEditMode(false);
               setEditingCertificate(null);
+              setIsManagementCertificate(false);
             }
           }
         }}
         modal={true}
       >
-        <DialogContent 
+        <DialogContent
           className="max-w-md"
           onInteractOutside={(e) => {
             // Prevent dialog from closing when clicking on calendar popover
             const target = e.target as HTMLElement;
-            if (target.closest('[role="dialog"]') || target.closest('.rdp') || target.closest('[data-radix-popper-content-wrapper]')) {
+            if (
+              target.closest('[role="dialog"]') ||
+              target.closest(".rdp") ||
+              target.closest("[data-radix-popper-content-wrapper]")
+            ) {
               e.preventDefault();
             }
           }}
         >
           <DialogHeader>
-            <DialogTitle>{isEditMode ? "Edit Certificate" : "Add Certificate"}</DialogTitle>
+            <DialogTitle>
+              {isEditMode ? "Edit Certificate" : "Add Certificate"}
+            </DialogTitle>
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -330,14 +357,17 @@ function Page() {
                       {employeeSearchOpen && (
                         <div className="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg max-h-[200px] overflow-y-auto">
                           {filteredEmployees.length === 0 ? (
-                            <div className="px-3 py-2 text-sm text-gray-500">No employee found</div>
+                            <div className="px-3 py-2 text-sm text-gray-500">
+                              No employee found
+                            </div>
                           ) : (
                             filteredEmployees.map((employee) => (
                               <div
                                 key={employee._id}
                                 className={cn(
                                   "px-3 py-2 cursor-pointer hover:bg-gray-100 text-sm flex items-center gap-2",
-                                  field.value === employee.empname && "bg-blue-50"
+                                  field.value === employee.empname &&
+                                    "bg-blue-50"
                                 )}
                                 onClick={() => {
                                   field.onChange(employee.empname);
@@ -365,6 +395,21 @@ function Page() {
                 )}
               />
 
+              {/* Management Certificate Toggle */}
+              <div className="flex items-center space-x-2 py-2">
+                <Switch
+                  id="management-certificate"
+                  checked={isManagementCertificate}
+                  onCheckedChange={setIsManagementCertificate}
+                />
+                <Label
+                  htmlFor="management-certificate"
+                  className="cursor-pointer"
+                >
+                  Management Certificate
+                </Label>
+              </div>
+
               {/* Certificate Type */}
               <FormField
                 control={form.control}
@@ -383,11 +428,65 @@ function Page() {
                         <SelectValue placeholder="Select Certificate Type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Internship">Internship</SelectItem>
-                        <SelectItem value="Appreciation">Appreciation</SelectItem>
-                        <SelectItem value="Game Changer">Game Changer</SelectItem>
-                        <SelectItem value="Excellence">Excellence</SelectItem>
-                        <SelectItem value="Achievement">Achievement</SelectItem>
+                        {!isManagementCertificate ? (
+                          <>
+                            <SelectItem value="Internship">
+                              Internship
+                            </SelectItem>
+                            <SelectItem value="Appreciation">
+                              Appreciation
+                            </SelectItem>
+                            <SelectItem value="Game Changer">
+                              Game Changer
+                            </SelectItem>
+                            <SelectItem value="Excellence">
+                              Excellence
+                            </SelectItem>
+                            <SelectItem value="Achievement">
+                              Achievement
+                            </SelectItem>
+                            <SelectItem value="Excellence in Performance">
+                              Excellence in Performance
+                            </SelectItem>
+                            <SelectItem value="Dedication">
+                              Dedication
+                            </SelectItem>
+                            <SelectItem value="Team Work">Team Work</SelectItem>
+                            <SelectItem value="Employee of the Month">
+                              Employee of the Month
+                            </SelectItem>
+                            <SelectItem value="Employee of the Year">
+                              Employee of the Year
+                            </SelectItem>
+                            <SelectItem value="Outstanding Performance">
+                              Outstanding Performance
+                            </SelectItem>
+                          </>
+                        ) : (
+                          <>
+                            <SelectItem value="Leadership Excellence">
+                              Leadership Excellence
+                            </SelectItem>
+                            <SelectItem value="Strategic Achievement">
+                              Strategic Achievement
+                            </SelectItem>
+                            <SelectItem value="Excellence in Management">
+                              Excellence in Management
+                            </SelectItem>
+                            <SelectItem value="Inspirational Leadership">
+                              Inspirational Leadership
+                            </SelectItem>
+                            <SelectItem value="Team Excellence">
+                              Team Excellence
+                            </SelectItem>
+                            <SelectItem value="Innovation">
+                              Innovation
+                            </SelectItem>
+                            <SelectItem value="Outstanding Performance">
+                              Outstanding Performance
+                            </SelectItem>
+                          </>
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -424,13 +523,19 @@ function Page() {
                               </Button>
                             </FormControl>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start" style={{ zIndex: 9999 }}>
+                          <PopoverContent
+                            className="w-auto p-0"
+                            align="start"
+                            style={{ zIndex: 9999 }}
+                          >
                             <Calendar
                               mode="single"
                               selected={startDate}
                               onSelect={(date) => {
                                 setStartDate(date);
-                                field.onChange(date ? format(date, "yyyy-MM-dd") : "");
+                                field.onChange(
+                                  date ? format(date, "yyyy-MM-dd") : ""
+                                );
                               }}
                               initialFocus
                             />
@@ -467,13 +572,19 @@ function Page() {
                               </Button>
                             </FormControl>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start" style={{ zIndex: 9999 }}>
+                          <PopoverContent
+                            className="w-auto p-0"
+                            align="start"
+                            style={{ zIndex: 9999 }}
+                          >
                             <Calendar
                               mode="single"
                               selected={endDate}
                               onSelect={(date) => {
                                 setEndDate(date);
-                                field.onChange(date ? format(date, "yyyy-MM-dd") : "");
+                                field.onChange(
+                                  date ? format(date, "yyyy-MM-dd") : ""
+                                );
                               }}
                               disabled={(date) =>
                                 startDate ? date < startDate : false
@@ -516,13 +627,19 @@ function Page() {
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start" style={{ zIndex: 9999 }}>
+                      <PopoverContent
+                        className="w-auto p-0"
+                        align="start"
+                        style={{ zIndex: 9999 }}
+                      >
                         <Calendar
                           mode="single"
                           selected={dateAwarded}
                           onSelect={(date) => {
                             setDateAwarded(date);
-                            field.onChange(date ? format(date, "yyyy-MM-dd") : "");
+                            field.onChange(
+                              date ? format(date, "yyyy-MM-dd") : ""
+                            );
                           }}
                           initialFocus
                         />

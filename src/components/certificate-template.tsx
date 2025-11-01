@@ -11,7 +11,19 @@ interface CertificateTemplateProps {
     | "Appreciation"
     | "Game Changer"
     | "Excellence"
-    | "Achievement";
+    | "Achievement"
+    | "Excellence in Performance"
+    | "Dedication"
+    | "Team Work"
+    | "Employee of the Month"
+    | "Employee of the Year"
+    | "Outstanding Performance"
+    | "Leadership Excellence"
+    | "Strategic Achievement"
+    | "Excellence in Management"
+    | "Inspirational Leadership"
+    | "Team Excellence"
+    | "Innovation";
   dateAwarded: string;
   organizationName: string;
   organizationLogo?: string;
@@ -38,6 +50,30 @@ export default function CertificateTemplate({
         return "Excellence";
       case "Achievement":
         return "Achievement";
+      case "Excellence in Performance":
+        return "Excellence in Performance";
+      case "Dedication":
+        return "Dedication";
+      case "Team Work":
+        return "Team Work";
+      case "Employee of the Month":
+        return "Employee of the Month";
+      case "Employee of the Year":
+        return "Employee of the Year";
+      case "Outstanding Performance":
+        return "Outstanding Performance";
+      case "Leadership Excellence":
+        return "Leadership Excellence";
+      case "Strategic Achievement":
+        return "Strategic Achievement";
+      case "Excellence in Management":
+        return "Excellence in Management";
+      case "Inspirational Leadership":
+        return "Inspirational Leadership";
+      case "Team Excellence":
+        return "Team Excellence";
+      case "Innovation":
+        return "Innovation";
       default:
         return "Completion";
     }
@@ -55,6 +91,30 @@ export default function CertificateTemplate({
         return "Is Awarded for Demonstrating Remarkable Excellence and Superior Performance.";
       case "Achievement":
         return "Is Recognized for Outstanding Achievement and Significant Success.";
+      case "Excellence in Performance":
+        return "Is Awarded for Exceptional Performance and Consistently Exceeding Expectations.";
+      case "Dedication":
+        return "Is Recognized for Unwavering Dedication and Commitment to Excellence.";
+      case "Team Work":
+        return "Is Honored for Outstanding Teamwork and Collaborative Spirit.";
+      case "Employee of the Month":
+        return "Is Recognized as Employee of the Month for Exceptional Contribution and Performance.";
+      case "Employee of the Year":
+        return "Is Honored as Employee of the Year for Outstanding Achievement and Excellence.";
+      case "Outstanding Performance":
+        return "Is Awarded for Consistently Delivering Outstanding Performance and Results.";
+      case "Leadership Excellence":
+        return "Is Recognized for Demonstrating Exceptional Leadership and Inspiring Others to Achieve Excellence.";
+      case "Strategic Achievement":
+        return "Is Honored for Strategic Vision and Achievement in Driving Organizational Success.";
+      case "Excellence in Management":
+        return "Is Awarded for Excellence in Management and Outstanding Leadership Capabilities.";
+      case "Inspirational Leadership":
+        return "Is Recognized for Inspirational Leadership that Motivates and Empowers Teams.";
+      case "Team Excellence":
+        return "Is Honored for Building and Leading High-Performing Teams to Exceptional Results.";
+      case "Innovation":
+        return "Is Awarded for Innovative Thinking and Creative Solutions that Drive Progress.";
       default:
         return "Has Successfully Completed";
     }
@@ -357,24 +417,24 @@ export default function CertificateTemplate({
 
             <div className="flex-1 flex flex-col justify-start w-full ">
               {/* Certificate Header */}
-              <div className="py-2 sm:py-2 md:py-2">
+              <div className="py-1 sm:py-1 md:py-1">
                 <svg
-                  className="w-full h-7 sm:h-9 md:h-12 lg:h-16"
-                  viewBox="0 0 1000 100"
+                  className="w-full h-7 sm:h-9 md:h-12 lg:h-14"
+                  viewBox="0 0 1200 100"
                   preserveAspectRatio="xMidYMid meet"
                 >
                   <defs>
                     <path
                       id="headerCurve"
-                      d="M 20,80 Q 500,15 980,80"
+                      d="M 50,80 Q 600,20 1150,80"
                       fill="none"
                     />
                   </defs>
                   <text
-                    fontSize="60"
+                    fontSize="48"
                     fontWeight="bold"
                     fill="#1e293b"
-                    letterSpacing="1"
+                    letterSpacing="0.5"
                     fontFamily="Playfair Display, Georgia, serif"
                   >
                     <textPath
@@ -390,16 +450,16 @@ export default function CertificateTemplate({
               </div>
 
               {/* Company Logo */}
-              <div className="py-1 sm:py-2 md:py-2">
+              <div className="py-2 sm:py-3 md:py-3">
                 <img
                   src="/fitmain.png"
                   alt="Company Logo"
-                  className="h-5 sm:h-8 md:h-10 lg:h-12 w-auto object-contain mx-auto"
+                  className="h-8 sm:h-12 md:h-14 lg:h-16 w-auto object-contain mx-auto"
                 />
               </div>
 
               {/* Recipient Name */}
-              <div className="py-1 mt-2 sm:py-2 md:py-3">
+              <div className="py-1 mt-3 sm:mt-4 sm:py-2 md:py-3">
                 <h3
                   className="text-base sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 px-2 leading-tight"
                   style={{
@@ -411,7 +471,7 @@ export default function CertificateTemplate({
                 </h3>
 
                 {/* Main Text */}
-                <div className="sm:pt-3 pt-1 text-center mx-auto">
+                <div className="sm:pt-4 pt-2 mt-2 text-center mx-auto">
                   <p className="text-[8px] sm:text-xs md:text-sm font-semibold text-slate-700 tracking-wide uppercase px-2 leading-tight break-words">
                     {getCertificateDescription()}
                   </p>

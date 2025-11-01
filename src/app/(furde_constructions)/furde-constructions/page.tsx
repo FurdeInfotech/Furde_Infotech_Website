@@ -150,6 +150,7 @@ function Page() {
                         alt={`${section.title} ${index + 1}`}
                         fill
                         className="object-cover"
+                        priority
                       />
                     </motion.div>
                   ))}
